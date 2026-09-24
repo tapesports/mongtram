@@ -577,13 +577,14 @@
   </div>
 
   <!-- AUDIO ELEMENT (NHẠC DROPBOX LẶP VÔ TẬN) -->
-  <audio id="bg-audio" loop></audio>
+  <audio id="bg-audio" loop preload="auto"></audio>
 
   <script>
     /* ===================================================
-       1. CẤU HÌNH NHẠC NỀN & TỰ ĐỘNG PHÁT + THANH ÂM LƯỢNG
+       1. CẤU HÌNH NHẠC NỀN & TỰ ĐỘNG PHÁT (ĐÃ TỐI ƯU CHO MOBILE)
        =================================================== */
-    const DROPBOX_URL = "https://www.dropbox.com/scl/fi/p50j0vpz0gi47ezyv29y9/Nh-c-Thi-n-Kh-ng-L-i-Nh-Nh-ng-Bu-ng-B-Lo-u-T-m-V-C-i-B-nh-An-T-nh-L-ng.mp3?rlkey=ai30itd3m3z08ujsfztbtq46a&st=2dfylb4n&dl=1";
+    // Đã đổi sang link stream direct chuẩn hỗ trợ thiết bị di động
+    const DROPBOX_URL = "https://dl.dropboxusercontent.com/scl/fi/p50j0vpz0gi47ezyv29y9/Nh-c-Thi-n-Kh-ng-L-i-Nh-Nh-ng-Bu-ng-B-Lo-u-T-m-V-C-i-B-nh-An-T-nh-L-ng.mp3?rlkey=ai30itd3m3z08ujsfztbtq46a";
 
     const audioPlayer = document.getElementById('bg-audio');
     const btnPlay = document.getElementById('btn-play');
@@ -592,12 +593,33 @@
     const volumeSlider = document.getElementById('volume-slider');
     const volumeIcon = document.getElementById('volume-icon');
 
+    let isAudioInitialized = false;
+
     function initAudio() {
       audioPlayer.src = DROPBOX_URL;
       audioPlayer.volume = 0.7; // Âm lượng mặc định 70%
+      audioPlayer.load();
 
-      // Cố gắng tự động phát nhạc ngay khi load trang
+      // Cố gắng tự động phát nhạc
       autoPlayAudio();
+
+      // Giải pháp chống chặn Autoplay trên di động: kích hoạt ngay lần chạm màn hình đầu tiên
+      const enableAudioOnMobile = () => {
+        if (!isAudioInitialized) {
+          audioPlayer.play().then(() => {
+            playIcon.textContent = 'pause';
+            trackIcon.classList.add('playing');
+            isAudioInitialized = true;
+          }).catch(err => {
+            console.log("Di động chờ tương tác bấm Play:", err);
+          });
+        }
+        document.removeEventListener('touchstart', enableAudioOnMobile);
+        document.removeEventListener('click', enableAudioOnMobile);
+      };
+
+      document.addEventListener('touchstart', enableAudioOnMobile, { once: true });
+      document.addEventListener('click', enableAudioOnMobile, { once: true });
     }
 
     function autoPlayAudio() {
@@ -606,27 +628,27 @@
         playPromise.then(() => {
           playIcon.textContent = 'pause';
           trackIcon.classList.add('playing');
+          isAudioInitialized = true;
         }).catch(() => {
-          // Trình duyệt chặn Autoplay -> Lắng nghe cú nhấp chuột đầu tiên của người dùng để phát
-          const enableAudioOnUserInteraction = () => {
-            audioPlayer.play().then(() => {
-              playIcon.textContent = 'pause';
-              trackIcon.classList.add('playing');
-            });
-            document.removeEventListener('click', enableAudioOnUserInteraction);
-            document.removeEventListener('keydown', enableAudioOnUserInteraction);
-          };
-          document.addEventListener('click', enableAudioOnUserInteraction);
-          document.addEventListener('keydown', enableAudioOnUserInteraction);
+          // Trình duyệt di động chặn tự động phát
+          playIcon.textContent = 'play_arrow';
+          trackIcon.classList.remove('playing');
         });
       }
     }
 
     function togglePlay() {
+      if (!audioPlayer.src || audioPlayer.src === "") {
+        audioPlayer.src = DROPBOX_URL;
+      }
+
       if (audioPlayer.paused) {
         audioPlayer.play().then(() => {
           playIcon.textContent = 'pause';
           trackIcon.classList.add('playing');
+          isAudioInitialized = true;
+        }).catch(err => {
+          console.error("Không thể phát audio:", err);
         });
       } else {
         audioPlayer.pause();
