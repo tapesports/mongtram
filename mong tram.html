@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mộng Trầm</title>
+  
+  <!-- Google Fonts & Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0a0c;
+      --card-bg: rgba(22, 22, 28, 0.75);
+      --gold-primary: #d4af37;
+      --gold-light: #f3e5ab;
+      --text-main: #e0e0e0;
+      --text-muted: #a0a0a0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    }
+
+    /* CANVAS HIỆU ỨNG KHÓI & CÁNH HOA */
+    #zen-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 8rem 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      padding-top: 1rem;
+    }
+
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      color: var(--gold-primary);
+      letter-spacing: 2px;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+
+    header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .header-actions {
+      margin-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-tour {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 0.85rem 2.2rem;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .btn-tour:hover {
+      background: var(--gold-primary);
+      color: #000;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* GRID DANH LAM */
+    .grid-landmarks {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.15);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.05);
+    }
+
+    .img-wrapper {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--gold-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-location {
+      font-size: 0.85rem;
+      color: var(--gold-primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .btn-enter {
+      width: 100%;
+      padding: 0.8rem;
+      background: transparent;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enter:hover {
+      background: var(--gold-primary);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+
+    /* FOOTER / CỦA MỘNG TRẦM */
+    footer.site-footer {
+      margin-top: 4rem;
+      padding: 2.5rem 1rem 1rem 1rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold-primary);
+      margin-bottom: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .footer-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .footer-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-item:hover {
+      color: var(--gold-primary);
+    }
+
+    .footer-item .material-icons-outlined {
+      color: var(--gold-primary);
+      font-size: 1.2rem;
+    }
+
+    /* FULLSCREEN SLIDESHOW MODAL */
+    .slideshow-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slideshow-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .slide-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      /* Khử nhòe mờ khi Zoom ảnh */
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      image-rendering: -webkit-optimize-contrast;
+      transition: opacity 1.5s ease-in-out, transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+      transform: scale(1) translateZ(0);
+    }
+
+    .slide-bg.active {
+      opacity: 1;
+      transform: scale(1.04) translateZ(0);
+    }
+
+    .slide-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.8) 100%);
+      z-index: 2;
+    }
+
+    .modal-header {
+      position: relative;
+      z-index: 3;
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-close {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn-close:hover {
+      background: var(--gold-primary);
+      color: #000;
+      border-color: var(--gold-primary);
+    }
+
+    .modal-footer {
+      position: relative;
+      z-index: 3;
+      padding: 2.5rem 3rem;
+      max-width: 800px;
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    }
+
+    .modal-location {
+      color: var(--gold-primary);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+    }
+
+    /* MUSIC PLAYER CONTROLLER BAR */
+    .player-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 12, 0.88);
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      backdrop-filter: blur(15px);
+      z-index: 1100;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .track-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .track-icon {
+      color: var(--gold-primary);
+      animation: spin 8s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .track-icon.playing {
+      animation-play-state: running;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .track-name {
+      font-size: 0.95rem;
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-play {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn-play:hover {
+      background: var(--gold-light);
+      color: #000;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    }
+
+    /* THANH ĐIỀU CHỈNH ÂM LƯỢNG */
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .volume-icon {
+      color: var(--gold-primary);
+      font-size: 20px;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 90px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(212, 175, 55, 0.3);
+      outline: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .modal-title { font-size: 2rem; }
+      .modal-footer { padding: 1.5rem; }
+      .player-bar { flex-direction: column; gap: 0.8rem; padding: 0.8rem 1rem; }
+      .footer-info { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CANVAS KHÓI MỜ & CÁNH HOA BAY -->
+  <canvas id="zen-canvas"></canvas>
+
+  <!-- MAIN LANDING PAGE -->
+  <div class="container">
+    <header>
+      <h1>Mộng Trầm - Danh Lam Việt Nam</h1>
+      <p>Thả mình vào không gian thanh tĩnh của chốn thiền môn, lắng nghe giai điệu nhạc thiền buông bỏ muộn phiền và thưởng ngoạn vẻ đẹp sông núi.</p>
+      <div class="header-actions">
+        <button class="btn-tour" onclick="startAllSlideshowTour()">
+          <span class="material-icons-outlined">play_circle</span>
+          Trình Chiếu Tất Cả Danh Lam 
+        </button>
+      </div>
+    </header>
+
+    <div class="grid-landmarks" id="grid-landmarks"></div>
+
+    <!-- FOOTER THÔNG TIN MỘNG TRẦM -->
+    <footer class="site-footer">
+      <h2 class="footer-brand">Mộng Trầm</h2>
+      <div class="footer-info">
+        <a href="tel:0349084623" class="footer-item" title="Số điện thoại">
+          <span class="material-icons-outlined">phone</span>
+          <span>0349084623</span>
+        </a>
+        <a href="mailto:mongtramfpt@gmail.com" class="footer-item" title="Email">
+          <span class="material-icons-outlined">email</span>
+          <span>mongtramfpt@gmail.com</span>
+        </a>
+        <a href="https://www.facebook.com/share/1J6Bki6nLd/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="footer-item" title="Facebook">
+          <span class="material-icons-outlined">facebook</span>
+          <span>Mộng Trầm</span>
+        </a>
+        <span class="footer-item" title="Địa chỉ">
+          <span class="material-icons-outlined">place</span>
+          <span>Khu CNC Hòa Lạc, Hà Nội</span>
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- FULLSCREEN SLIDESHOW MODAL -->
+  <div class="slideshow-modal" id="slideshow-modal">
+    <div class="slide-container" id="slide-container"></div>
+    <div class="slide-overlay"></div>
+
+    <div class="modal-header">
+      <div></div>
+      <button class="btn-close" onclick="closeSlideshow()" title="Đóng (ESC)">
+        <span class="material-icons-outlined">close</span>
+      </button>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-location" id="modal-location">
+        <span class="material-icons-outlined">location_on</span>
+        <span></span>
+      </div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-desc" id="modal-desc"></p>
+    </div>
+  </div>
+
+  <!-- MUSIC PLAYER BAR -->
+  <div class="player-bar">
+    <div class="track-info">
+      <span class="material-icons-outlined track-icon" id="track-icon">disc_full</span>
+      <div>
+        <div class="track-name" id="track-name">Nhạc Thiền Bình An Tĩnh Lặng</div>
+      </div>
+    </div>
+
+    <div class="player-controls">
+      <button class="btn-play" id="btn-play" onclick="togglePlay()" title="Phát/Tạm dừng">
+        <span class="material-icons-outlined" id="play-icon">play_arrow</span>
+      </button>
+
+      <!-- THANH ĐIỀU CHỈNH ÂM LƯỢNG -->
+      <div class="volume-control">
+        <span class="material-icons-outlined volume-icon" id="volume-icon">volume_up</span>
+        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIO ELEMENT (NHẠC DROPBOX LẶP VÔ TẬN) -->
+  <audio id="bg-audio" loop></audio>
+
+  <script>
+    /* ===================================================
+       1. CẤU HÌNH NHẠC NỀN & TỰ ĐỘNG PHÁT + THANH ÂM LƯỢNG
+       =================================================== */
+    const DROPBOX_URL = "https://www.dropbox.com/scl/fi/p50j0vpz0gi47ezyv29y9/Nh-c-Thi-n-Kh-ng-L-i-Nh-Nh-ng-Bu-ng-B-Lo-u-T-m-V-C-i-B-nh-An-T-nh-L-ng.mp3?rlkey=ai30itd3m3z08ujsfztbtq46a&st=2dfylb4n&dl=1";
+
+    const audioPlayer = document.getElementById('bg-audio');
+    const btnPlay = document.getElementById('btn-play');
+    const playIcon = document.getElementById('play-icon');
+    const trackIcon = document.getElementById('track-icon');
+    const volumeSlider = document.getElementById('volume-slider');
+    const volumeIcon = document.getElementById('volume-icon');
+
+    function initAudio() {
+      audioPlayer.src = DROPBOX_URL;
+      audioPlayer.volume = 0.7; // Âm lượng mặc định 70%
+
+      // Cố gắng tự động phát nhạc ngay khi load trang
+      autoPlayAudio();
+    }
+
+    function autoPlayAudio() {
+      const playPromise = audioPlayer.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          playIcon.textContent = 'pause';
+          trackIcon.classList.add('playing');
+        }).catch(() => {
+          // Trình duyệt chặn Autoplay -> Lắng nghe cú nhấp chuột đầu tiên của người dùng để phát
+          const enableAudioOnUserInteraction = () => {
+            audioPlayer.play().then(() => {
+              playIcon.textContent = 'pause';
+              trackIcon.classList.add('playing');
+            });
+            document.removeEventListener('click', enableAudioOnUserInteraction);
+            document.removeEventListener('keydown', enableAudioOnUserInteraction);
+          };
+          document.addEventListener('click', enableAudioOnUserInteraction);
+          document.addEventListener('keydown', enableAudioOnUserInteraction);
+        });
+      }
+    }
+
+    function togglePlay() {
+      if (audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+          playIcon.textContent = 'pause';
+          trackIcon.classList.add('playing');
+        });
+      } else {
+        audioPlayer.pause();
+        playIcon.textContent = 'play_arrow';
+        trackIcon.classList.remove('playing');
+      }
+    }
+
+    // Điều chỉnh âm lượng
+    volumeSlider.addEventListener('input', (e) => {
+      const val = e.target.value;
+      audioPlayer.volume = val;
+      if (val == 0) {
+        volumeIcon.textContent = 'volume_off';
+      } else if (val < 0.5) {
+        volumeIcon.textContent = 'volume_down';
+      } else {
+        volumeIcon.textContent = 'volume_up';
+      }
+    });
+
+    /* ===================================================
+       2. HIỆU ỨNG KHÓI MỜ & CÁNH HOA RỤNG (CANVAS)
+       =================================================== */
+    function initZenEffects() {
+      const canvas = document.getElementById('zen-canvas');
+      const ctx = canvas.getContext('2d');
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // Cánh hoa
+      const petals = [];
+      const numPetals = 25;
+      for (let i = 0; i < numPetals; i++) {
+        petals.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: Math.random() * 6 + 4,
+          speedY: Math.random() * 0.8 + 0.3,
+          speedX: Math.random() * 0.5 - 0.25,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.02,
+          opacity: Math.random() * 0.5 + 0.3
+        });
+      }
+
+      // Khói mờ
+      const smokeParticles = [];
+      const numSmoke = 15;
+      for (let i = 0; i < numSmoke; i++) {
+        smokeParticles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 150 + 100,
+          opacity: Math.random() * 0.04 + 0.01,
+          speedX: Math.random() * 0.3 - 0.15,
+          speedY: Math.random() * -0.2 - 0.05
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Vẽ Khói mờ
+        smokeParticles.forEach(p => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+
+          if (p.x < -p.radius) p.x = width + p.radius;
+          if (p.x > width + p.radius) p.x = -p.radius;
+          if (p.y < -p.radius) p.y = height + p.radius;
+
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+          grad.addColorStop(0, `rgba(212, 175, 55, ${p.opacity})`);
+          grad.addColorStop(0.5, `rgba(255, 255, 255, ${p.opacity * 0.5})`);
+          grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Vẽ Cánh hoa rơi
+        petals.forEach(p => {
+          p.y += p.speedY;
+          p.x += Math.sin(p.angle) * 0.5 + p.speedX;
+          p.angle += p.spin;
+
+          if (p.y > height + 20) {
+            p.y = -20;
+            p.x = Math.random() * width;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = `rgba(243, 229, 171, ${p.opacity})`;
+          
+          // Hình cánh hoa
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.bezierCurveTo(-p.size, -p.size, -p.size, p.size, 0, p.size * 1.5);
+          ctx.bezierCurveTo(p.size, p.size, p.size, -p.size, 0, 0);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+
+    /* ===================================================
+       3. MẢNG DỮ LIỆU DANH LAM THẮNG CẢNH (GIỮ NGUYÊN)
+       =================================================== */
+    const LIST_DANH_LAM = [
+      {
+        id: "chuahuong",
+        title: "Chùa Hương",
+        location: "Hương Sơn, Hà Nội",
+        desc: "Quần thể văn hóa - tôn giáo miền cõi Phật ngàn năm, nơi sông Yến uốn lượn hiền hòa dẫn lối vào Động Hương Tích.",
+        images: [
+          "https://www.dropbox.com/scl/fi/icvwa2we8q3dx8omkd4iz/chua-huong-1.jpg?rlkey=bi5kqu0ax8mreg3q0pbj7ks0h&st=ofejrrtl&raw=1",
+          "https://www.dropbox.com/scl/fi/h43eitz4d3yqv7v1l4lsh/chua-huong-2.jpg?rlkey=lxeh0mudjlf7smghe2x9wxb9o&st=hrgnptzb&raw=1",
+          "https://www.dropbox.com/scl/fi/wa11sgzu5by2b7of2vju0/chua-huong.jpg?rlkey=d7m3s436kjl1hmudak2amr300&st=ggog1nz3&raw=1",
+          "https://www.dropbox.com/scl/fi/djeg0qkc28xwqvir4i3bt/chua-huong-4.jpg?rlkey=zlksu1mxhif9i3nf6ww6ck9j4&st=30gu4tx4&raw=1"
+        ]
+      },
+      {
+        id: "baidinh",
+        title: "Chùa Bái Đính",
+        location: "Ninh Bình",
+        desc: "Ngôi chùa rộng lớn bậc nhất Việt Nam với hành lang 500 vị La Hán và tiếng chuông đồng vang xa giữa đại ngàn.",
+        images: [
+          "https://www.dropbox.com/scl/fi/kjy679zs8cpgeb3p6fuit/bai-dinh-1.jpg?rlkey=ffwsuup2ltpvlhlyrbkcmohyc&st=2ta1yqgb&raw=1",
+          "https://www.dropbox.com/scl/fi/wcglxqh46lrssgy2gz45c/bai-dinh-2.jpg?rlkey=v9ne3hizc76v4v95haraxue2r&st=3nkutzev&raw=1",
+          "https://www.dropbox.com/scl/fi/4dhaxg2kbyznn3epxg67i/bai-dinh-3.jpg?rlkey=9k5pkzmto9yrc9to67z4do7jg&st=3m8fx1jh&raw=1",
+          "https://www.dropbox.com/scl/fi/tn1173ghrdnbgk9t8r5wj/bai-dinh-4.webp?rlkey=3u9xohoq7xa14yzz2achdk5n8&st=ej3t32tt&raw=1"
+        ]
+      },
+      {
+        id: "tamchuc",
+        title: "Chùa Tam Chúc",
+        location: "Hà Nam",
+        desc: "Quần thể tâm linh ẩn mình giữa lòng hồ Lục Ngạn mênh mông, lưng tựa núi Thất Tinh uy nghiêm cổ kính.",
+        images: [
+          "https://www.dropbox.com/scl/fi/61ltbn028b3apild950zi/tam-chuc-1.jpg?rlkey=748ikk15dl9bf3baa2a5mn4fk&st=gz7pe4sn&raw=1",
+          "https://www.dropbox.com/scl/fi/5tza9j3ofmk4up579x9tx/tam-chuc-2.webp?rlkey=9p9qhrym8v8o3tq0yg0cx0ow5&st=t72v534y&raw=1",
+          "https://www.dropbox.com/scl/fi/ap07m6bya34qi2zzmbixg/tam-chuc-3.jpg?rlkey=yya536b04pjj2b9jac313ais6&st=ucs7y278&raw=1",
+          "https://www.dropbox.com/scl/fi/z8s9qbk08x2ji6bdpmhg5/tam-chuc-4.jpg?rlkey=ion1jatpfgesx5slse6izuxe0&st=jvvuecrk&raw=1"
+        ]
+      },
+      {
+        id: "truclamdalat",
+        title: "Thiền Viện Trúc Lâm Đà Lạt",
+        location: "Đà Lạt, Lâm Đồng",
+        desc: "Tọa lạc ngoạn mục trên đỉnh Phụng Hoàng bên hồ Tuyền Lâm, rợp bóng rừng thông reo tĩnh lặng chốn thiền môn.",
+        images: [
+          "https://www.dropbox.com/scl/fi/zx3s9a6tmjohvid47unmh/thien-vien.webp?rlkey=52nnu3dpfyira0jdlz18847f3&st=bh34uugb&raw=1",
+          "https://www.dropbox.com/scl/fi/1hdl2y2l9tsjkvrgct7xr/thien-vien-2.jpg?rlkey=9jil8yqzhw29oqy7hlcmmhinf&st=pqg4hhml&raw=1",
+          "https://www.dropbox.com/scl/fi/yaece08rva0i5nr60zhl1/thien-vien-3.jpg?rlkey=wznh4z2qhnf265e7bxwkcfmvm&st=856dq3cu&raw=1",
+          "https://www.dropbox.com/scl/fi/rbw7ky5ab5x12oej62syv/thien-vien-4.jpeg?rlkey=zshtpmxc79zlsu184tjodclmt&st=l9jg9a76&raw=1"
+        ]
+      },
+      {
+        id: "linhungbaibut",
+        title: "Chùa Linh Ứng Bãi Bụt",
+        location: "Sơn Trà, Đà Nẵng",
+        desc: "Ngôi chùa hướng mình ra biển Đông rộng lớn, nơi tượng Quan Thế Âm Bồ Tát cao nhất Việt Nam sừng sững giữa đất trời.",
+        images: [
+          "https://www.dropbox.com/scl/fi/n9pr0e29etcdpxoi2gf51/linh-ung-1.jpg?rlkey=rxtn378xg5hewiq50sad6cn7k&st=xoohx99i&raw=1",
+          "https://www.dropbox.com/scl/fi/qoyp4ohm4d0ssk1zdd0si/linh-ung-2.jpg?rlkey=sdvbheopffdphxuekmu76ad8c&st=y1zjw5l4&raw=1",
+          "https://www.dropbox.com/scl/fi/2rtn3ii3cvipb0pm9kwl8/linh-ung-3.jpg?rlkey=ons0cahgza7rkkyace13a5p33&st=a2cf6rxb&raw=1",
+          "https://www.dropbox.com/scl/fi/pvvr714yx4qm5zhxibbel/linh-ung-4.jpg?rlkey=cfnecma3m5ptkvdqamrbnayvm&st=ar7uxt9z&raw=1"
+        ]
+      },
+      {
+        id: "thienmu",
+        title: "Chùa Thiên Mụ",
+        location: "Thừa Thiên Huế",
+        desc: "Biểu tượng tâm linh bên dòng sông Hương thơ mộng, tiếng chuông chùa Thiên Mụ đã đi vào thơ ca hoài cổ.",
+        images: [
+          "https://www.dropbox.com/scl/fi/0gckozzkdiq0y7ckkyqmu/thien-mu-1.jpg?rlkey=5hyeol4zuxt97dme5hf7ucmrg&st=8iivlv5r&raw=1",
+          "https://www.dropbox.com/scl/fi/58sedpog2ya35qhazervf/thien-mu-2.jpg?rlkey=gz3cjtj347d45rgq1xyamgumd&st=0wiwnf87&raw=1",
+          "https://www.dropbox.com/scl/fi/bx4f86kitiwyytratpzij/thien-mu-3.jpg?rlkey=wdh5mx2t57fvrdv302792n7z5&st=hoec7yva&raw=1",
+          "https://www.dropbox.com/scl/fi/yxanovcxfvvtdwtfgd5fc/thien-mu-4.jpg?rlkey=cbthl7bbrizdg5qsa83rrzjgw&st=12d15967&raw=1"
+        ]
+      },
+      {
+        id: "truclamtaythien",
+        title: "Thiền Viện Trúc Lâm Tây Thiên",
+        location: "Vĩnh Phúc",
+        desc: "Khung cảnh mây vờn đỉnh núi Tây Thiên, nơi khởi nguồn của thiền phái Trúc Lâm giữa thung lũng nguyên sơ.",
+        images: [
+          "https://www.dropbox.com/scl/fi/6a5wsfmp138hesonv7f7l/truc-lam-1.webp?rlkey=dsroh6t356ymq0uqi1glx87bt&st=x1bjxhl8&raw=1",
+          "https://www.dropbox.com/scl/fi/6yqn3bp9eei0bddm43kcn/truc-lam-2.webp?rlkey=l873r51khrjxxdyveivn0qnc0&st=u0wzbmrq&raw=1",
+          "https://www.dropbox.com/scl/fi/scspymb52zrvshyk4ivm1/truc-lam-3.jpg?rlkey=e6e36c5a1aa3xp4x1lr88g7k2&st=g56c0vsb&raw=1",
+          "https://www.dropbox.com/scl/fi/t9azi0o8qtqfymjb5j9el/truc-lam-4.jpg?rlkey=l0fsj4eaetd649sqp9ebza5vx&st=kowi6zn9&raw=1"
+        ]
+      },
+      {
+        id: "linhphuoc",
+        title: "Chùa Linh Phước (Chùa Ve Chai)",
+        location: "Đà Lạt, Lâm Đồng",
+        desc: "Công trình kiến trúc độc đáo khảm từ hàng triệu mảnh sành sứ tinh xảo, rực rỡ sắc màu không gian thiền định.",
+        images: [
+          "https://www.dropbox.com/scl/fi/rrlhqvigtbb4dghedg69y/linh-phuoc-1.jpg?rlkey=2ki8io7u9c5lcvuf3iq31wrlb&st=gexi7pnr&raw=1",
+          "https://www.dropbox.com/scl/fi/5qhpb3kofdmy7it5tdg83/linh-phuoc-2.jpg?rlkey=c5cmjvalf7fxzuzueotwqu9wp&st=vpch0y3s&raw=1",
+          "https://www.dropbox.com/scl/fi/g4jcvrmt1hq5x3uypt9r4/linh-phuoc-3.webp?rlkey=iwmnt2whsfpnekw2o2y8fonec&st=3f395wk7&raw=1",
+          "https://www.dropbox.com/scl/fi/p593we11xneck568cp286/linh-phuoc-4.jpg?rlkey=b66nn5whlyyccwx30hkkdbrfe&st=agjy7iy1&raw=1"
+        ]
+      },
+      {
+        id: "yentu",
+        title: "Chùa Yên Tử",
+        location: "Quảng Ninh",
+        desc: "Đỉnh núi thiêng mờ ảo sương giăng, nơi ghi dấu ấn thiền phái Trúc Lâm và ngôi Chùa Đồng trên mây ngàn.",
+        images: [
+          "https://www.dropbox.com/scl/fi/4qx41gqxxq7ujba4z0x3w/yen-tu-1.jpg?rlkey=57wutoa0z8pkzv1uripz2tuyo&st=0of9m31a&raw=1",
+          "https://www.dropbox.com/scl/fi/sxo3vcobft94zeggxbhvl/yen-tu-2.jpg?rlkey=ngq5uoc13liblvl2sucncqcx3&st=lefcf4b5&raw=1",
+          "https://www.dropbox.com/scl/fi/4l0wqgaagprn51p8ceqva/yen-tu-3.jpg?rlkey=qzz2u5g6ikv8l7q15lnohikws&st=un3czha2&raw=1",
+          "https://www.dropbox.com/scl/fi/cc68348btt8wntkr1d6vw/yen-tu-4.jpg?rlkey=9dj8ex58mfiqjv7ku0i8v27hh&st=dmbzhpex&raw=1"
+        ]
+      },
+      {
+        id: "nuibaden",
+        title: "Núi Bà Đen – Chùa Bà",
+        location: "Tây Ninh",
+        desc: "Nóc nhà Nam Bộ mờ ảo trong biển mây, nơi linh thiêng thờ Linh Sơn Thánh Mẫu huyền thoại.",
+        images: [
+          "https://www.dropbox.com/scl/fi/zatt8izaxbtsnvmlo3ui9/ba-den-1.webp?rlkey=ubbijd97bxg2nbe9cvmfvr4l5&st=4qy5n42x&raw=1",
+          "https://www.dropbox.com/scl/fi/81ata0xt8mgsz1jvta6ve/ba-den-2.jpg?rlkey=x4l40kctjm63paa418tg219gk&st=jvvfar4g&raw=1",
+          "https://www.dropbox.com/scl/fi/4pkb5vpttdaob8x96ioh1/ba-den-3.jpg?rlkey=7okrp0v4tcy66t2cczxlqq1yn&st=bt6eo8mw&raw=1",
+          "https://www.dropbox.com/scl/fi/193awzvhmuwhqgpdp9wsn/ba-den-4.jpg?rlkey=d25imeydzav8vexwary5osd86&st=l7lshk5z&raw=1"
+        ]
+      },
+      {
+        id: "longson",
+        title: "Chùa Long Sơn",
+        location: "Nha Trang, Khánh Hòa",
+        desc: "Cổ tự danh tiếng dưới chân núi Trại Thủy, nổi bật với pho tượng Kim Thân Phật Tổ uy nghi tọa thiền.",
+        images: [
+          "https://www.dropbox.com/scl/fi/84mwdy47daxequ502cn2z/long-son-1.jpg?rlkey=l2idme3kwjclwlkph2jwvuj0d&st=i84loorx&raw=1",
+          "https://www.dropbox.com/scl/fi/zw1imn4o6u8zaussrjnng/long-son-2.jpg?rlkey=wnkizuf1m838tbpirmaqjfha6&st=duvn7w1n&raw=1",
+          "https://www.dropbox.com/scl/fi/6m7wqtexlaomfqcjd4y7e/long-son-3.jpg?rlkey=gjzsxfr2163gugwdj1ijn4w5p&st=sgxxfesf&raw=1",
+          "https://www.dropbox.com/scl/fi/u0r5ij2lkwsjftvzb1rts/long-son-4.jpg?rlkey=r13dm4beiwdq9cy7esic50oz2&st=993vw91d&raw=1"
+        ]
+      },
+      {
+        id: "tayphuong",
+        title: "Chùa Tây Phương",
+        location: "Thạch Thất, Hà Nội",
+        desc: "Kiệt tác kiến trúc cổ Việt Nam với bộ tượng 18 vị La Hán trầm mặc mang đậm dấu ấn điêu khắc Phật giáo.",
+        images: [
+          "https://www.dropbox.com/scl/fi/ogcgja8gejbbgwwvkiwxn/tay-phuong-1.jpg?rlkey=7o9apaekcsqu6nxf0pn18kfmi&st=cr191bli&raw=1",
+          "https://www.dropbox.com/scl/fi/4wwzinains4phi23rvdsb/tay-phuong-2.jpg?rlkey=3x6xll3blyg071n9cv8wzmc8v&st=hvnb0tar&raw=1",
+          "https://www.dropbox.com/scl/fi/o4ln6t7a2lsv94s2vllsk/tay-phuong-3.jpg?rlkey=jglxjqznhj1fvh3wubj9o0552&st=gut0g2xg&raw=1",
+          "https://www.dropbox.com/scl/fi/hq8vazwli90foj0lr5mxj/tay-phuong-4.webp?rlkey=84te0p5zpz13zeyjenyxo0da0&st=3igy149w&raw=1"
+        ]
+      },
+      {
+        id: "vinhnghiem",
+        title: "Chùa Vĩnh Nghiêm",
+        location: "TP. Hồ Chí Minh",
+        desc: "Ngôi chùa kiến trúc Phật giáo truyền thống miền Bắc ngay giữa lòng thành phố, không gian tịnh tâm an bình.",
+        images: [
+          "https://www.dropbox.com/scl/fi/o4fswnl0rkfyb7eqh75yl/vinh-nghiem-1.jpeg?rlkey=q7jzm46qpkroq0paydspg3dm1&st=g0tlyasp&raw=1",
+          "https://www.dropbox.com/scl/fi/z5x93ejkag52dj9mrfamt/vinh-nghiem-2.jpg?rlkey=6ye39ujsfz0ymo0xcqyf2q97j&st=0240pop8&raw=1",
+          "https://www.dropbox.com/scl/fi/2sefuhpjqfwu0mf6eam7l/vinh-nghiem-3.jpeg?rlkey=s8g84ns8dw4u73sv9sn0f4daj&st=kpm320in&raw=1",
+          "https://www.dropbox.com/scl/fi/2ek9vhlza1uufv0q7emzu/vinh-nghiem-4.webp?rlkey=27a4rffb0n9c14ckayosu7aa7&st=yxcbgpw5&raw=1"
+        ]
+      }
+    ];
+
+    /* ===================================================
+       4. TẠO GIAO DIỆN CARDS VÀO TRANG CHÍNH
+       =================================================== */
+    function renderLandmarkCards() {
+      const grid = document.getElementById('grid-landmarks');
+      grid.innerHTML = '';
+
+      LIST_DANH_LAM.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="img-wrapper">
+            <img src="${item.images[0]}" alt="${item.title}" class="card-img" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${item.title}</h3>
+            <div class="card-location">
+              <span class="material-icons-outlined" style="font-size: 16px;">location_on</span>
+              <span>${item.location}</span>
+            </div>
+            <p class="card-desc">${item.desc}</p>
+            <button class="btn-enter" onclick="openSlideshow(LIST_DANH_LAM.find(x => x.id === '${item.id}'))">
+              <span class="material-icons-outlined">visibility</span>
+              Thưởng Ngoạn
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    /* ===================================================
+       5. BỘ TRÌNH CHIẾU SLIDESHOW FULLSCREEN (GIỮ NGUYÊN)
+       =================================================== */
+    let slideshowInterval = null;
+    let currentImageIndex = 0;
+    let currentLandmarkIndex = 0;
+    let isAllTourMode = false;
+
+    function openSlideshow(landmark) {
+      isAllTourMode = false;
+      showLandmarkSlide(landmark);
+    }
+
+    function showLandmarkSlide(landmark) {
+      const modal = document.getElementById('slideshow-modal');
+      const container = document.getElementById('slide-container');
+      
+      document.getElementById('modal-title').textContent = landmark.title;
+      document.getElementById('modal-location').querySelector('span:last-child').textContent = landmark.location;
+      document.getElementById('modal-desc').textContent = landmark.desc;
+
+      container.innerHTML = '';
+      landmark.images.forEach((imgUrl, idx) => {
+        const slide = document.createElement('div');
+        slide.className = `slide-bg ${idx === 0 ? 'active' : ''}`;
+        slide.style.backgroundImage = `url('${imgUrl}')`;
+        container.appendChild(slide);
+      });
+
+      modal.classList.add('active');
+      currentImageIndex = 0;
+
+      clearInterval(slideshowInterval);
+      slideshowInterval = setInterval(() => {
+        const slides = container.querySelectorAll('.slide-bg');
+        if (!slides || slides.length === 0) return;
+
+        slides[currentImageIndex].classList.remove('active');
+        currentImageIndex++;
+
+        if (currentImageIndex >= slides.length) {
+          if (isAllTourMode) {
+            currentLandmarkIndex = (currentLandmarkIndex + 1) % LIST_DANH_LAM.length;
+            showLandmarkSlide(LIST_DANH_LAM[currentLandmarkIndex]);
+          } else {
+            currentImageIndex = 0;
+            slides[currentImageIndex].classList.add('active');
+          }
+        } else {
+          slides[currentImageIndex].classList.add('active');
+        }
+      }, 4500);
+    }
+
+    function startAllSlideshowTour() {
+      isAllTourMode = true;
+      currentLandmarkIndex = 0;
+      showLandmarkSlide(LIST_DANH_LAM[0]);
+    }
+
+    function closeSlideshow() {
+      const modal = document.getElementById('slideshow-modal');
+      modal.classList.remove('active');
+      clearInterval(slideshowInterval);
+      isAllTourMode = false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSlideshow();
+    });
+
+    // KHỞI TẠO BAN ĐẦU
+    window.addEventListener('DOMContentLoaded', () => {
+      initAudio();
+      initZenEffects();
+      renderLandmarkCards();
+    });
+  </script>
+</body>
+</html>
