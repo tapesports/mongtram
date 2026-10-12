@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mộng Trầm</title>
+  <title>Mộng Trầm - Trải Nghiệm & Không Gian Tịnh Tâm</title>
   
   <!-- Google Fonts & Material Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +39,39 @@
         radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
     }
 
+    /* THANH MENU TAB THU GỌN Ở TRÊN CÙNG */
+    .navbar-tabs {
+      position: sticky;
+      top: 0;
+      background: rgba(10, 10, 12, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.9rem 1rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .nav-tab-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-tab-item:hover, .nav-tab-item.active {
+      color: var(--gold-light);
+      background: rgba(212, 175, 55, 0.12);
+    }
+
     /* CANVAS HIỆU ỨNG KHÓI & CÁNH HOA */
     #zen-canvas {
       position: fixed;
@@ -60,7 +93,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 2.5rem;
       padding-top: 1rem;
     }
 
@@ -82,42 +115,134 @@
       font-weight: 300;
     }
 
-    .header-actions {
-      margin-top: 1.8rem;
-      display: flex;
-      justify-content: center;
+    /* ẨN/HIỆN CÁC SECTION TAB */
+    .tab-section {
+      display: none;
+    }
+    .tab-section.active-section {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
     }
 
-    .btn-tour {
-      background: rgba(212, 175, 55, 0.12);
-      border: 1px solid var(--gold-primary);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTION STYLING */
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
       color: var(--gold-light);
-      padding: 0.85rem 2.2rem;
-      border-radius: 30px;
-      font-size: 0.95rem;
+      text-align: center;
+      margin: 1rem 0 1.5rem 0;
       letter-spacing: 1px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
     }
 
-    .btn-tour:hover {
-      background: var(--gold-primary);
-      color: #000;
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-      transform: translateY(-2px);
+    /* 1. CÂU CHUYỆN SẢN PHẨM */
+    .brand-story-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .story-intro-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      backdrop-filter: blur(10px);
+      line-height: 1.9;
+      font-size: 1.08rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .story-intro-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold-light);
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .story-intro-card p {
+      margin-bottom: 1.2rem;
+      color: var(--text-main);
+      text-align: justify;
     }
 
-    /* GRID DANH LAM */
+    .screen-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
+    .story-screen-card {
+      background: linear-gradient(145deg, rgba(22, 22, 28, 0.85), rgba(15, 15, 20, 0.95));
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 16px;
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .story-screen-card:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.12);
+    }
+    .screen-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--gold-primary);
+      letter-spacing: 3px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .screen-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .screen-desc {
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .screen-arrow {
+      text-align: center;
+      color: var(--gold-primary);
+      font-size: 2rem;
+      animation: bounceArrow 2s infinite;
+      margin: 0.5rem 0;
+    }
+    @keyframes bounceArrow {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(8px); }
+      60% { transform: translateY(4px); }
+    }
+    .story-quote-footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      border-top: 1px dashed rgba(212, 175, 55, 0.3);
+      border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+    }
+    .story-quote-footer h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+      font-style: italic;
+    }
+
+    /* 2. THƯỞNG NGOẠN (DANH LAM THẮNG CẢNH) */
     .grid-landmarks {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 2rem;
+      margin-top: 1.5rem;
     }
-
     .card {
       background: var(--card-bg);
       border: 1px solid rgba(212, 175, 55, 0.15);
@@ -128,43 +253,36 @@
       display: flex;
       flex-direction: column;
     }
-
     .card:hover {
       transform: translateY(-8px);
       border-color: rgba(212, 175, 55, 0.5);
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.15);
     }
-
     .card-img {
       width: 100%;
       height: 220px;
       object-fit: cover;
       transition: transform 0.6s ease;
     }
-
     .card:hover .card-img {
       transform: scale(1.05);
     }
-
     .img-wrapper {
       overflow: hidden;
       position: relative;
     }
-
     .card-body {
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
-
     .card-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.6rem;
       color: var(--gold-light);
       margin-bottom: 0.4rem;
     }
-
     .card-location {
       font-size: 0.85rem;
       color: var(--gold-primary);
@@ -173,7 +291,6 @@
       align-items: center;
       gap: 4px;
     }
-
     .card-desc {
       font-size: 0.9rem;
       color: var(--text-muted);
@@ -181,7 +298,6 @@
       margin-bottom: 1.5rem;
       flex-grow: 1;
     }
-
     .btn-enter {
       width: 100%;
       padding: 0.8rem;
@@ -198,21 +314,408 @@
       gap: 8px;
       transition: all 0.3s ease;
     }
-
     .btn-enter:hover {
       background: var(--gold-primary);
       color: #000;
       box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
     }
+    .header-actions {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .btn-tour {
+      background: var(--gold-primary);
+      color: #000;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    .btn-tour:hover {
+      background: var(--gold-light);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    }
 
-    /* FOOTER / CỦA MỘNG TRẦM */
+    /* 4. CẨM NANG & KIẾN THỨC (SLIDER TRƯỢT NGANG VÒNG LẶP VÔ TẬN) */
+    .guide-slider-wrapper {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .guide-viewport {
+      overflow: hidden;
+      width: 100%;
+      border-radius: 16px;
+    }
+    .guide-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      width: 100%;
+    }
+    .guide-slide-item {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 0 0.5rem;
+    }
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .info-card:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.15);
+    }
+    .info-img-wrapper {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      height: 260px;
+    }
+    .info-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .info-card:hover .info-card-img {
+      transform: scale(1.05);
+    }
+    .info-card-body {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .info-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold-light);
+      margin-bottom: 0.8rem;
+    }
+    .info-card-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+      flex-grow: 1;
+    }
+    .btn-read-more {
+      width: 100%;
+      padding: 0.9rem;
+      background: transparent;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    .btn-read-more:hover {
+      background: var(--gold-primary);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+    .slider-btn {
+      background: rgba(10, 10, 12, 0.85);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+    .slider-btn:hover {
+      background: var(--gold-primary);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    }
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1.5rem;
+    }
+    .slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .slider-dot.active {
+      background: var(--gold-primary);
+      width: 25px;
+      border-radius: 5px;
+    }
+
+    /* MODAL ĐỌC BÀI VIẾT CẨM NANG CHI TIẾT */
+    .article-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 5, 7, 0.95);
+      backdrop-filter: blur(15px);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    .article-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .article-modal-content {
+      background: #121218;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 3rem 2.5rem;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      animation: modalSlideUp 0.4s ease;
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .btn-close-article {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--gold-light);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .btn-close-article:hover {
+      background: var(--gold-primary);
+      color: #000;
+      border-color: var(--gold-primary);
+    }
+    .article-header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding-bottom: 1.5rem;
+    }
+    .article-title-modal {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .article-meta {
+      font-size: 0.9rem;
+      color: var(--gold-primary);
+    }
+    .article-body-content {
+      font-size: 1.02rem;
+      line-height: 1.9;
+      color: var(--text-main);
+    }
+    .article-body-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold-light);
+      font-size: 1.5rem;
+      margin: 1.5rem 0 0.8rem 0;
+    }
+    .article-body-content p {
+      margin-bottom: 1.2rem;
+    }
+    .article-body-content ul {
+      margin-bottom: 1.2rem;
+      padding-left: 1.5rem;
+    }
+    .article-body-content li {
+      margin-bottom: 0.5rem;
+    }
+    .article-body-content img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .article-cta {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+    }
+    .article-cta a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .article-cta a:hover {
+      color: var(--gold-primary);
+      text-decoration: underline;
+    }
+
+    /* 5. GIAN HÀNG SẢN PHẨM */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+    .shop-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .shop-img {
+      width: 100%;
+      height: auto;
+      max-height: 280px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .shop-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .shop-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      margin-bottom: 0.3rem;
+    }
+    .shop-price {
+      color: var(--gold-primary);
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.8rem;
+    }
+    .btn-buy {
+      margin-top: auto;
+      background: transparent;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      transition: all 0.3s;
+    }
+    .btn-buy:hover {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    /* 6. ĐÁNH GIÁ & CHIA SẺ TRẢI NGHIỆM */
+    .review-form-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--gold-light);
+      margin-bottom: 0.4rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(10, 10, 12, 0.8);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+    }
+    .btn-submit {
+      background: var(--gold-primary);
+      color: #000;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+    .btn-submit:hover {
+      background: var(--gold-light);
+    }
+
+    /* FOOTER */
     footer.site-footer {
       margin-top: 4rem;
       padding: 2.5rem 1rem 1rem 1rem;
       border-top: 1px solid rgba(212, 175, 55, 0.15);
       text-align: center;
     }
-
     .footer-brand {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.8rem;
@@ -220,7 +723,6 @@
       margin-bottom: 1.2rem;
       letter-spacing: 1px;
     }
-
     .footer-info {
       display: flex;
       justify-content: center;
@@ -230,7 +732,6 @@
       font-size: 0.95rem;
       color: var(--text-main);
     }
-
     .footer-item {
       display: flex;
       align-items: center;
@@ -239,11 +740,9 @@
       text-decoration: none;
       transition: color 0.3s ease;
     }
-
     .footer-item:hover {
       color: var(--gold-primary);
     }
-
     .footer-item .material-icons-outlined {
       color: var(--gold-primary);
       font-size: 1.2rem;
@@ -265,12 +764,10 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
     .slideshow-modal.active {
       opacity: 1;
       pointer-events: auto;
     }
-
     .slide-container {
       position: absolute;
       top: 0;
@@ -279,7 +776,6 @@
       height: 100%;
       z-index: 1;
     }
-
     .slide-bg {
       position: absolute;
       top: 0;
@@ -289,19 +785,16 @@
       background-size: cover;
       background-position: center;
       opacity: 0;
-      /* Khử nhòe mờ khi Zoom ảnh */
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       image-rendering: -webkit-optimize-contrast;
       transition: opacity 1.5s ease-in-out, transform 6s cubic-bezier(0.25, 1, 0.5, 1);
       transform: scale(1) translateZ(0);
     }
-
     .slide-bg.active {
       opacity: 1;
       transform: scale(1.04) translateZ(0);
     }
-
     .slide-overlay {
       position: absolute;
       top: 0;
@@ -311,7 +804,6 @@
       background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.8) 100%);
       z-index: 2;
     }
-
     .modal-header {
       position: relative;
       z-index: 3;
@@ -320,7 +812,6 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .btn-close {
       background: rgba(0,0,0,0.5);
       border: 1px solid rgba(255,255,255,0.3);
@@ -334,20 +825,17 @@
       justify-content: center;
       transition: all 0.3s ease;
     }
-
     .btn-close:hover {
       background: var(--gold-primary);
       color: #000;
       border-color: var(--gold-primary);
     }
-
     .modal-footer {
       position: relative;
       z-index: 3;
       padding: 2.5rem 3rem;
       max-width: 800px;
     }
-
     .modal-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 3rem;
@@ -355,7 +843,6 @@
       margin-bottom: 0.5rem;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
     }
-
     .modal-location {
       color: var(--gold-primary);
       font-size: 1rem;
@@ -364,7 +851,6 @@
       align-items: center;
       gap: 6px;
     }
-
     .modal-desc {
       font-size: 1.05rem;
       line-height: 1.6;
@@ -372,54 +858,61 @@
       text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
     }
 
-    /* MUSIC PLAYER CONTROLLER BAR */
+    /* MUSIC PLAYER BAR */
     .player-bar {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(10, 10, 12, 0.88);
-      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 600px;
+      background: rgba(10, 10, 12, 0.92);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 30px;
       backdrop-filter: blur(15px);
       z-index: 1100;
-      padding: 0.8rem 2rem;
+      padding: 0.7rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
+    @media (max-width: 768px) {
+      .player-bar {
+        width: 92%;
+        bottom: 15px;
+        padding: 0.6rem 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
     .track-info {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-
     .track-icon {
       color: var(--gold-primary);
       animation: spin 8s linear infinite;
       animation-play-state: paused;
     }
-
     .track-icon.playing {
       animation-play-state: running;
     }
-
     @keyframes spin {
       100% { transform: rotate(360deg); }
     }
-
     .track-name {
       font-size: 0.95rem;
       color: var(--gold-light);
       font-weight: 500;
     }
-
     .player-controls {
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
-
     .btn-play {
       width: 42px;
       height: 42px;
@@ -433,25 +926,19 @@
       justify-content: center;
       transition: all 0.3s ease;
     }
-
     .btn-play:hover {
       background: var(--gold-light);
-      color: #000;
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
-
-    /* THANH ĐIỀU CHỈNH ÂM LƯỢNG */
     .volume-control {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     .volume-icon {
       color: var(--gold-primary);
       font-size: 20px;
     }
-
     .volume-slider {
       -webkit-appearance: none;
       appearance: none;
@@ -461,9 +948,7 @@
       background: rgba(212, 175, 55, 0.3);
       outline: none;
       cursor: pointer;
-      transition: background 0.3s;
     }
-
     .volume-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -472,11 +957,6 @@
       border-radius: 50%;
       background: var(--gold-primary);
       cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .volume-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.3);
     }
 
     @media (max-width: 768px) {
@@ -490,25 +970,171 @@
 </head>
 <body>
 
+  <!-- THANH MENU TAB THU GỌN Ở TRÊN CÙNG -->
+  <nav class="navbar-tabs">
+    <div class="nav-tab-item active" onclick="switchTab('tab-story', this)">Câu chuyện sản phẩm</div>
+    <div class="nav-tab-item" onclick="switchTab('tab-tour', this)">Thưởng ngoạn</div>
+    <div class="nav-tab-item" onclick="switchTab('tab-guide', this)">Cẩm nang</div>
+    <div class="nav-tab-item" onclick="switchTab('tab-shop', this)">Mẫu &amp; bảng giá</div>
+    <div class="nav-tab-item" onclick="switchTab('tab-review', this)">Đánh giá</div>
+  </nav>
+
   <!-- CANVAS KHÓI MỜ & CÁNH HOA BAY -->
   <canvas id="zen-canvas"></canvas>
 
-  <!-- MAIN LANDING PAGE -->
+  <!-- MAIN CONTAINER -->
   <div class="container">
     <header>
-      <h1>Mộng Trầm - Danh Lam Việt Nam</h1>
-      <p>Thả mình vào không gian thanh tĩnh của chốn thiền môn, lắng nghe giai điệu nhạc thiền buông bỏ muộn phiền và thưởng ngoạn vẻ đẹp sông núi.</p>
+      <h1>Mộng Trầm - Không Gian Tịnh Tâm</h1>
+      <p>Thả mình vào không gian thanh tĩnh, khám phá tinh hoa Bách Xanh tự nhiên và thưởng ngoạn những danh lam thắng cảnh tuyệt mỹ.</p>
+    </header>
+
+    <!-- 1. CÂU CHUYỆN SẢN PHẨM & HÀNH TRÌNH THƯƠNG HIỆU -->
+    <div id="tab-story" class="tab-section active-section">
+      <h2 class="section-title">Câu Chuyện Mộng Trầm</h2>
+      <div class="brand-story-wrapper">
+        <div class="story-intro-card">
+          <h3>Từ Bản Rừng Yên Bái Đến Khoảng Lặng Của Người Trẻ Thành Thị</h3>
+          <p>Có những ngày tan sở trở về phòng, khép lại cánh cửa sau lưng là tiếng còi xe, những tin nhắn chưa trả lời và hàng tá deadline còn dang dở. Người trẻ tìm đến nến thơm, tinh dầu hay những bản nhạc nhẹ để tìm một khoảng thở cho riêng mình. Nhưng đôi khi, giữa những mùi hương quen thuộc ấy, ta vẫn mong một hương thơm mộc mạc hơn – một mùi hương mang theo hơi thở của đất trời tự nhiên.</p>
+          <p>Câu chuyện của Mộng Trầm bắt đầu từ một chuyến đi về Yên Bái. Giữa núi rừng Văn Chấn, nơi những bản làng nằm giữa mây núi và những cánh rừng xanh trải dài, chúng mình biết đến Bách Xanh – một loài cây gỗ quý hiếm của Việt Nam, mang trong mình mùi hương tự nhiên đặc trưng được ghi nhận qua nhiều thế hệ.</p>
+          <p>Điều khiến chúng mình nhớ nhất không phải chỉ là một mùi hương, mà là cảm giác chậm lại khi đứng giữa không gian núi rừng ấy.</p>
+        </div>
+
+        <div class="screen-container">
+          <!-- MÀN HÌNH 01 -->
+          <div class="story-screen-card">
+            <div class="screen-number">01 — Nơi câu chuyện bắt đầu</div>
+            <h4 class="screen-heading">Hành Trình Về Miền Sương Mù Yên Bái</h4>
+            <p class="screen-desc">Một chuyến đi về Yên Bái đã đưa chúng mình đến với Bách Xanh – nơi thiên nhiên cất giữ những giá trị nguyên sơ và thuần khiết nhất.</p>
+          </div>
+          <div class="screen-arrow"><span class="material-icons-outlined">south</span></div>
+
+          <!-- MÀN HÌNH 02 -->
+          <div class="story-screen-card">
+            <div class="screen-number">02 — Mùi hương của đại ngàn</div>
+            <h4 class="screen-heading">Hơi Thở Gỗ Bách Xanh</h4>
+            <p class="screen-desc">Giữa núi rừng Văn Chấn, chúng mình bắt gặp một mùi hương mộc mạc, ấm và sâu – mùi hương đánh thức mọi giác quan và xoa dịu tâm hồn.</p>
+          </div>
+          <div class="screen-arrow"><span class="material-icons-outlined">south</span></div>
+
+          <!-- MÀN HÌNH 03 -->
+          <div class="story-screen-card">
+            <div class="screen-number">03 — Mộng Trầm ra đời</div>
+            <h4 class="screen-heading">Phá Vỡ Định Kiến Về Trầm Hương</h4>
+            <p class="screen-desc">“Tại sao một hương thơm đẹp như vậy lại chưa thực sự gần gũi với người trẻ?” Khi nhắc đến nhang trầm, nhiều người thường nghĩ tới không gian thờ cúng hay lo ngại về chất lượng. Từ câu hỏi ấy, Mộng Trầm ra đời để thay đổi góc nhìn đó.</p>
+          </div>
+          <div class="screen-arrow"><span class="material-icons-outlined">south</span></div>
+
+          <!-- MÀN HÌNH 04 -->
+          <div class="story-screen-card">
+            <div class="screen-number">04 — Mang rừng về phố</div>
+            <h4 class="screen-heading">Khoảnh Khắc Tịnh Tâm Giữa Đời Sống Hiện Đại</h4>
+            <p class="screen-desc">Từ nụ Bách Xanh Yên Bái, Mộng Trầm muốn biến một hương thơm truyền thống thành một phần của những khoảnh khắc hiện đại: vài phút đọc sách sau giờ làm, một buổi tối bên tách trà, hay góc bàn làm việc yên tĩnh.</p>
+          </div>
+        </div>
+
+        <div class="story-quote-footer">
+          <h4>“Mộng Trầm – Mang hương núi rừng, gửi một khoảng lặng.”</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. THƯỞNG NGOẠN (DANH LAM THẮNG CẢNH) -->
+    <div id="tab-tour" class="tab-section">
+      <h2 class="section-title">Thưởng Ngoạn Danh Lam Thắng Cảnh</h2>
       <div class="header-actions">
         <button class="btn-tour" onclick="startAllSlideshowTour()">
           <span class="material-icons-outlined">play_circle</span>
-          Trình Chiếu Tất Cả Danh Lam 
+          Trình Chiếu Tất Cả Danh Lam
         </button>
       </div>
-    </header>
 
-    <div class="grid-landmarks" id="grid-landmarks"></div>
+      <div class="grid-landmarks" id="grid-landmarks"></div>
+    </div>
 
-    <!-- FOOTER THÔNG TIN MỘNG TRẦM -->
+    <!-- 4. CẨM NANG & KIẾN THỨC (SLIDER TRƯỢT NGANG VÒNG LẶP VÔ TẬN) -->
+    <div id="tab-guide" class="tab-section">
+      <h2 class="section-title">Cẩm Nang & Kiến Thức Trầm Hương</h2>
+      
+      <div class="guide-slider-wrapper">
+        <button class="slider-btn" onclick="prevGuideSlide()" title="Bài trước">
+          <span class="material-icons-outlined">chevron_left</span>
+        </button>
+
+        <div class="guide-viewport">
+          <div class="guide-track" id="guide-track">
+            <!-- Render động bằng JavaScript -->
+          </div>
+        </div>
+
+        <button class="slider-btn" onclick="nextGuideSlide()" title="Bài tiếp theo">
+          <span class="material-icons-outlined">chevron_right</span>
+        </button>
+      </div>
+
+      <div class="slider-dots" id="slider-dots"></div>
+    </div>
+
+    <!-- 5. GIAN HÀNG SẢN PHẨM -->
+    <div id="tab-shop" class="tab-section">
+      <h2 class="section-title">Mẫu & Bảng Giá Mộng Trầm</h2>
+      <div class="shop-grid">
+        <div class="shop-card">
+          <img src="https://www.dropbox.com/scl/fi/5un4bgfltt5qz7zj4ppjn/nuuu.jpg?rlkey=cs3q36sehn8wj78erfwawi2ts&st=jwcaf8m1&raw=1" alt="Hộp Nụ Trầm Bách Xanh" class="shop-img" onerror="this.src='https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80'">
+          <div class="shop-body">
+            <h3 class="shop-title">Hộp Nụ Trầm Bách Xanh (50 Viên)</h3>
+            <div class="shop-price">100.000 VNĐ</div>
+            <a href="https://www.messenger.com/t/1220710947803551/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0" target="_blank" rel="noopener noreferrer" class="btn-buy">Đặt Mua Ngay</a>
+          </div>
+        </div>
+        <div class="shop-card">
+          <img src="https://www.dropbox.com/scl/fi/5oo95qdkcifv1wnryf4d4/luu.jpg?rlkey=psejevjfbqa908ma2udi6nv9f&st=61zb5nfj&raw=1" alt="Lư Xông Sứ" class="shop-img" onerror="this.src='https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80'">
+          <div class="shop-body">
+            <h3 class="shop-title">Lư Xông Sứ (5 màu theo mệnh: Kim, Mộc, Thủ, Hỏa, Thổ)</h3>
+            <div class="shop-price">50.000 VNĐ</div>
+            <a href="https://www.messenger.com/t/1220710947803551/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0" target="_blank" rel="noopener noreferrer" class="btn-buy">Đặt Mua Ngay</a>
+          </div>
+        </div>
+        <div class="shop-card">
+          <img src="https://www.dropbox.com/scl/fi/3nvt587vo9at6vlurecld/combo.jpg?rlkey=5iicobem9uboco3yssghku5yf&st=mcprk12v&raw=1" alt="Bộ Quà Tặng Cao Cấp" class="shop-img" onerror="this.src='https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80'">
+          <div class="shop-body">
+            <h3 class="shop-title">Combo 1 Hộp Nụ + 1 Lư Xông Sứ</h3>
+            <div class="shop-price">140.000 VNĐ</div>
+            <a href="https://www.messenger.com/t/1220710947803551/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0" target="_blank" rel="noopener noreferrer" class="btn-buy">Đặt Mua Ngay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. ĐÁNH GIÁ VÀ CHIA SẺ TRẢI NGHIỆM -->
+    <div id="tab-review" class="tab-section">
+      <h2 class="section-title">Đánh Giá & Chia Sẻ Trải Nghiệm</h2>
+      <div class="review-form-box">
+        <form>
+          <div class="form-group">
+            <label>Họ và tên của bạn</label>
+            <input type="text" class="form-control" placeholder="Nhập tên của bạn..." required>
+          </div>
+          <div class="form-group">
+            <label>Đánh giá mùi hương & Cảm nhận</label>
+            <select class="form-control">
+              <option>⭐⭐⭐⭐⭐ - Mùi hương thanh tịnh, vô cùng dễ chịu</option>
+              <option>⭐⭐⭐⭐ - Thư giãn tốt khi làm việc và uống trà</option>
+              <option>⭐⭐⭐ - Trải nghiệm ổn</option>
+              <option>⭐⭐ - Trải nghiệm chưa tốt</option>
+              <option>⭐ - Trải nghiệm tệ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Chia sẻ cảm nhận chi tiết hoặc tải ảnh trải nghiệm</label>
+            <textarea class="form-control" rows="3" placeholder="Không gian trải nghiệm của bạn ra sao?"></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Gửi Đánh Giá</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
     <footer class="site-footer">
       <h2 class="footer-brand">Mộng Trầm</h2>
       <div class="footer-info">
@@ -532,7 +1158,7 @@
     </footer>
   </div>
 
-  <!-- FULLSCREEN SLIDESHOW MODAL -->
+  <!-- FULLSCREEN SLIDESHOW MODAL (THƯỞNG NGOẠN) -->
   <div class="slideshow-modal" id="slideshow-modal">
     <div class="slide-container" id="slide-container"></div>
     <div class="slide-overlay"></div>
@@ -554,6 +1180,22 @@
     </div>
   </div>
 
+  <!-- MODAL ĐỌC BÀI VIẾT CẨM NANG CHI TIẾT -->
+  <div class="article-modal" id="article-modal">
+    <div class="article-modal-content">
+      <button class="btn-close-article" onclick="closeArticleModal()" title="Đóng (ESC)">
+        <span class="material-icons-outlined">close</span>
+      </button>
+      <div class="article-header">
+        <div class="article-meta" id="article-modal-meta">Biên tập bởi Mộng Trầm</div>
+        <h2 class="article-title-modal" id="article-modal-title">Tiêu Đề Bài Viết</h2>
+      </div>
+      <div class="article-body-content" id="article-modal-body">
+        <!-- Nội dung bài viết chi tiết sẽ load vào đây -->
+      </div>
+    </div>
+  </div>
+
   <!-- MUSIC PLAYER BAR -->
   <div class="player-bar">
     <div class="track-info">
@@ -568,7 +1210,6 @@
         <span class="material-icons-outlined" id="play-icon">play_arrow</span>
       </button>
 
-      <!-- THANH ĐIỀU CHỈNH ÂM LƯỢNG -->
       <div class="volume-control">
         <span class="material-icons-outlined volume-icon" id="volume-icon">volume_up</span>
         <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
@@ -576,15 +1217,50 @@
     </div>
   </div>
 
-  <!-- AUDIO ELEMENT (NHẠC DROPBOX LẶP VÔ TẬN) -->
+  <!-- AUDIO ELEMENT -->
   <audio id="bg-audio" loop preload="auto"></audio>
+
+  <!-- VOICEFLOW CHAT WIDGET CODE -->
+  <script type="text/javascript">
+    (function(d, t) {
+        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          window.voiceflow.chat.load({
+            verify: { projectID: '6ac48f8e261e33c4db9cf8bf' },
+            url: 'https://general-runtime.voiceflow.com',
+            voice: {
+              url: 'https://runtime-api.voiceflow.com'
+            }
+          });
+        }
+        v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs'; v.type = 'text/javascript'; s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
 
   <script>
     /* ===================================================
-       1. CẤU HÌNH NHẠC NỀN & TỰ ĐỘNG PHÁT (ĐÃ TỐI ƯU CHO MOBILE)
+       0. HỆ THỐNG CHUYỂN TAB ẨN/HIỆN NỘI DUNG ĐỘC LẬP
        =================================================== */
-    // Đã đổi sang link stream direct chuẩn hỗ trợ thiết bị di động
-    const DROPBOX_URL = "https://dl.dropboxusercontent.com/scl/fi/p50j0vpz0gi47ezyv29y9/Nh-c-Thi-n-Kh-ng-L-i-Nh-Nh-ng-Bu-ng-B-Lo-u-T-m-V-C-i-B-nh-An-T-nh-L-ng.mp3?rlkey=ai30itd3m3z08ujsfztbtq46a";
+    function switchTab(tabId, element) {
+      const sections = document.querySelectorAll('.tab-section');
+      sections.forEach(sec => sec.classList.remove('active-section'));
+
+      const navItems = document.querySelectorAll('.nav-tab-item');
+      navItems.forEach(nav => nav.classList.remove('active'));
+
+      const targetSection = document.getElementById(tabId);
+      if (targetSection) {
+        targetSection.classList.add('active-section');
+      }
+      element.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ===================================================
+       1. CẤU HÌNH NHẠC NỀN & TỰ ĐỘNG PHÁT
+       =================================================== */
+    const DROPBOX_URL = "https://dl.dropboxusercontent.com/scl/fi/p50j0vpz0gi47ezyv29y9/Nh-c-Thi-n-Kh-ng-L-i-Nh-Nh-ng-Bu-ng-B-Lo-u-T-M-V-C-i-B-nh-An-T-nh-L-ng.mp3?rlkey=ai30itd3m3z08ujsfztbtq46a";
 
     const audioPlayer = document.getElementById('bg-audio');
     const btnPlay = document.getElementById('btn-play');
@@ -597,13 +1273,9 @@
 
     function initAudio() {
       audioPlayer.src = DROPBOX_URL;
-      audioPlayer.volume = 0.7; // Âm lượng mặc định 70%
+      audioPlayer.volume = 0.7;
       audioPlayer.load();
 
-      // Cố gắng tự động phát nhạc
-      autoPlayAudio();
-
-      // Giải pháp chống chặn Autoplay trên di động: kích hoạt ngay lần chạm màn hình đầu tiên
       const enableAudioOnMobile = () => {
         if (!isAudioInitialized) {
           audioPlayer.play().then(() => {
@@ -611,7 +1283,7 @@
             trackIcon.classList.add('playing');
             isAudioInitialized = true;
           }).catch(err => {
-            console.log("Di động chờ tương tác bấm Play:", err);
+            console.log("Đợi tương tác phát nhạc:", err);
           });
         }
         document.removeEventListener('touchstart', enableAudioOnMobile);
@@ -620,21 +1292,6 @@
 
       document.addEventListener('touchstart', enableAudioOnMobile, { once: true });
       document.addEventListener('click', enableAudioOnMobile, { once: true });
-    }
-
-    function autoPlayAudio() {
-      const playPromise = audioPlayer.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          playIcon.textContent = 'pause';
-          trackIcon.classList.add('playing');
-          isAudioInitialized = true;
-        }).catch(() => {
-          // Trình duyệt di động chặn tự động phát
-          playIcon.textContent = 'play_arrow';
-          trackIcon.classList.remove('playing');
-        });
-      }
     }
 
     function togglePlay() {
@@ -657,120 +1314,16 @@
       }
     }
 
-    // Điều chỉnh âm lượng
     volumeSlider.addEventListener('input', (e) => {
       const val = e.target.value;
       audioPlayer.volume = val;
-      if (val == 0) {
-        volumeIcon.textContent = 'volume_off';
-      } else if (val < 0.5) {
-        volumeIcon.textContent = 'volume_down';
-      } else {
-        volumeIcon.textContent = 'volume_up';
-      }
+      if (val == 0) volumeIcon.textContent = 'volume_off';
+      else if (val < 0.5) volumeIcon.textContent = 'volume_down';
+      else volumeIcon.textContent = 'volume_up';
     });
 
     /* ===================================================
-       2. HIỆU ỨNG KHÓI MỜ & CÁNH HOA RỤNG (CANVAS)
-       =================================================== */
-    function initZenEffects() {
-      const canvas = document.getElementById('zen-canvas');
-      const ctx = canvas.getContext('2d');
-
-      let width = canvas.width = window.innerWidth;
-      let height = canvas.height = window.innerHeight;
-
-      window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      });
-
-      // Cánh hoa
-      const petals = [];
-      const numPetals = 25;
-      for (let i = 0; i < numPetals; i++) {
-        petals.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          size: Math.random() * 6 + 4,
-          speedY: Math.random() * 0.8 + 0.3,
-          speedX: Math.random() * 0.5 - 0.25,
-          angle: Math.random() * Math.PI * 2,
-          spin: (Math.random() - 0.5) * 0.02,
-          opacity: Math.random() * 0.5 + 0.3
-        });
-      }
-
-      // Khói mờ
-      const smokeParticles = [];
-      const numSmoke = 15;
-      for (let i = 0; i < numSmoke; i++) {
-        smokeParticles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          radius: Math.random() * 150 + 100,
-          opacity: Math.random() * 0.04 + 0.01,
-          speedX: Math.random() * 0.3 - 0.15,
-          speedY: Math.random() * -0.2 - 0.05
-        });
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, width, height);
-
-        // Vẽ Khói mờ
-        smokeParticles.forEach(p => {
-          p.x += p.speedX;
-          p.y += p.speedY;
-
-          if (p.x < -p.radius) p.x = width + p.radius;
-          if (p.x > width + p.radius) p.x = -p.radius;
-          if (p.y < -p.radius) p.y = height + p.radius;
-
-          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-          grad.addColorStop(0, `rgba(212, 175, 55, ${p.opacity})`);
-          grad.addColorStop(0.5, `rgba(255, 255, 255, ${p.opacity * 0.5})`);
-          grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-          ctx.fillStyle = grad;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        // Vẽ Cánh hoa rơi
-        petals.forEach(p => {
-          p.y += p.speedY;
-          p.x += Math.sin(p.angle) * 0.5 + p.speedX;
-          p.angle += p.spin;
-
-          if (p.y > height + 20) {
-            p.y = -20;
-            p.x = Math.random() * width;
-          }
-
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.angle);
-          ctx.fillStyle = `rgba(243, 229, 171, ${p.opacity})`;
-          
-          // Hình cánh hoa
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.bezierCurveTo(-p.size, -p.size, -p.size, p.size, 0, p.size * 1.5);
-          ctx.bezierCurveTo(p.size, p.size, p.size, -p.size, 0, 0);
-          ctx.fill();
-          ctx.restore();
-        });
-
-        requestAnimationFrame(draw);
-      }
-
-      draw();
-    }
-
-    /* ===================================================
-       3. MẢNG DỮ LIỆU DANH LAM THẮNG CẢNH (GIỮ NGUYÊN)
+       2. DỮ LIỆU & HỆ THỐNG THƯỞNG NGOẠN DANH LAM (TỪ MỘNG TRẦM)
        =================================================== */
     const LIST_DANH_LAM = [
       {
@@ -931,11 +1484,9 @@
       }
     ];
 
-    /* ===================================================
-       4. TẠO GIAO DIỆN CARDS VÀO TRANG CHÍNH
-       =================================================== */
     function renderLandmarkCards() {
       const grid = document.getElementById('grid-landmarks');
+      if (!grid) return;
       grid.innerHTML = '';
 
       LIST_DANH_LAM.forEach((item) => {
@@ -962,9 +1513,6 @@
       });
     }
 
-    /* ===================================================
-       5. BỘ TRÌNH CHIẾU SLIDESHOW FULLSCREEN (GIỮ NGUYÊN)
-       =================================================== */
     let slideshowInterval = null;
     let currentImageIndex = 0;
     let currentLandmarkIndex = 0;
@@ -1029,15 +1577,451 @@
       isAllTourMode = false;
     }
 
+    /* ===================================================
+       3. DỮ LIỆU & HỆ THỐNG SLIDER CẨM NANG (4 BÀI VIẾT, VÒNG LẶP VÔ TẬN)
+       =================================================== */
+    const LIST_CANG_NANG = [
+      {
+        id: "quy-trinh",
+        title: "Quy Trình Sản Xuất Nụ Trầm Hương",
+        image: "https://www.dropbox.com/scl/fi/zf5ueu5gmf39qtjkecm41/nu-tram.png?rlkey=c3okd4i4ja7586g4xphzkurwj&st=oaho3uz7&raw=1",
+        shortDesc: "Khám phá chi tiết các công đoạn thủ công tỉ mỉ: trộn bột nguyên chất, ép khuôn, nắn nụ, phơi nắng tự nhiên đến đóng gói minh bạch...",
+        fullContent: `
+          <h3>Trộn bột</h3>
+          <p>Gỗ bách xanh sau khi được xay mịn sẽ được trộn cùng một lượng nhỏ vỏ cây bời lời. Đây là chất kết dính tự nhiên duy nhất, không thêm bất kỳ hóa chất hay phụ gia nào khác. Nhờ vậy, hỗn hợp bột giữ trọn mùi hương vốn có và bảo toàn năng lượng thuần khiết từ cây dó bầu. An toàn hay không nằm ở bước này. Mang lại lợi ích hay không cũng nằm ở bước này.</p>
+          <img src="https://www.dropbox.com/scl/fi/fzx8nd1up5xfg0wcflrdr/title.jpg?rlkey=30t8yv5a4mp4ui4tdsxeawkeo&st=ejbdv8hk&raw=1" alt="Trộn bột">
+
+          <h3>Ép khuôn</h3>
+          <p>Hỗn hợp được cho vào máy ép khuôn, ép thành những khối chắc chắn với kích thước phù hợp với máy nắn nụ. Việc ép giúp bột nén chặt, tạo độ bền và dễ dàng đưa vào khuôn nắn. Bề mặt của các khối ép phải đều, không nứt, không lõm, đảm bảo chất lượng đồng nhất.</p>
+          <img src="https://www.dropbox.com/scl/fi/du35d08w5pdzgkiqc630f/tron-bot.jpg?rlkey=i0rt3o614kord8aqcklgied73&st=2fcgmq67&raw=1" alt="Ép khuôn">
+
+          <h3>Nắn nụ</h3>
+          <p>Khi khối bột đạt chuẩn, công đoạn nắn nụ được thực hiện. Đây là lúc từng nụ trầm được định hình bằng khuôn chuyên dụng. Sự tỉ mỉ trong khâu này quyết định vẻ đẹp tự nhiên, cân đối của mỗi nụ trầm. Các nụ bị nứt, méo hoặc không đồng đều sẽ quay lại bước trộn và ép khuôn trở lại. Không bỏ phí nguyên liệu quý.</p>
+          <img src="https://www.dropbox.com/scl/fi/du35d08w5pdzgkiqc630f/tron-bot.jpg?rlkey=i0rt3o614kord8aqcklgied73&st=c2n1cfus&raw=1" alt="Nắn nụ">
+
+          <h3>Phơi khô</h3>
+          <p>Nụ trầm sau khi tạo hình sẽ được đem ra phơi khô dưới ánh nắng nhẹ và thoáng đãng. Nhưng, không phải thời điểm nào cũng thích hợp, vì nắng quá gắt khiến nụ dễ nứt gãy, mất dáng. Do đó, Mộng Trầm luôn ưu tiên phơi nắng từ khi ánh nắng dịu vừa đủ để giúp nụ khô đều, giữ trọn form dáng và hương thơm tự nhiên. Nụ được phơi đến khi khô hoàn toàn, tránh ẩm mốc và đảm bảo độ bền khi bảo quản.</p>
+          <img src="https://www.dropbox.com/scl/fi/ligewqqjvl7x4142as3wh/nan-nu.jpg?rlkey=0hskadqtwa8ekxmtith2zn6gu&st=ju3yfkr9&raw=1" alt="Phơi khô">
+
+          <h3>Đóng gói</h3>
+          <p>Khi đã đạt độ khô tiêu chuẩn, nụ trầm sẽ được kiểm tra lần cuối trước khi đóng gói. Những sản phẩm đạt yêu cầu được đặt vào hộp giấy thân thiện môi trường, kèm thông tin minh bạch về lô sản xuất, ngày sản xuất và hạn sử dụng.</p>
+          <img src="https://www.dropbox.com/scl/fi/xir1owaslsvo6g9q4n0ax/hop.jpg?rlkey=ute5udhdkwnnzsf3lviys650y&st=4lfsksh2&raw=1" alt="Đóng gói">
+        `
+      },
+      {
+        id: "go-quy-hiem",
+        title: "Khám Phá Các Loại Gỗ Quý Hiếm Tự Nhiên Có Mùi Thơm Thư Giãn Dành Cho Không Gian Sống Hiện Đại",
+        image: "https://www.dropbox.com/scl/fi/ac4kiqa8a42l6v4yb42wf/image_2026-10-12_130343374.png?rlkey=7mxbs7fqvxu0hkptl5054rebv&st=zzvnlrfj&raw=1",
+        shortDesc: "Khám phá các dòng danh mộc quý hiếm của Việt Nam với hương thơm độc bản giúp thanh lọc không gian sống và cân bằng cảm xúc...",
+        fullContent: `
+          <p>Trong đời sống hiện đại, giữa những bộn bề công việc và nhịp sống đô thị gấp gáp, con người ngày càng có xu hướng tìm về với thiên nhiên để cân bằng cảm xúc và tái tạo năng lượng. Bên cạnh nến thơm hay tinh dầu nhân tạo, các dòng gỗ quý tự nhiên có mùi thơm đang trở thành lựa chọn hàng đầu để thanh lọc không gian sống, tạo cảm giác an yên và giải tỏa áp lực.</p>
+          <p>Thiên nhiên ban tặng cho núi rừng Việt Nam nhiều loài danh mộc quý hiếm với hương thơm độc bản. Dưới đây, Mộng Trầm cùng bạn điểm danh những loại gỗ thơm tự nhiên nổi bật nhất và giá trị thực tế của chúng đối với đời sống thường nhật.</p>
+          <img src="https://www.dropbox.com/scl/fi/j51ccihkvjgcinkflq54v/image_2026-10-12_130529429.png?rlkey=34nk5keneberd9forg55kozre&st=ks0qvt25&raw=1" alt="Gỗ quý tự nhiên">
+
+          <h3>1. Gỗ Trầm Hương – Danh mộc tĩnh tại và sâu lắng</h3>
+          <ul>
+            <li><strong>Đặc tính:</strong> Trầm hương hình thành từ những tổn thương trên thân cây Dó Bầu, qua hàng chục năm tích tụ lượng nhựa thơm quý giá. Gỗ có màu nâu xám đến đen tuyền tùy lượng dầu, sớ dầu đan xen thớ gỗ.</li>
+            <li><strong>Mùi hương:</strong> Mùi trầm ấm, sâu lắng, hơi cay nhẹ thoảng vị ngọt hậu thanh tao.</li>
+            <li><strong>Ứng dụng đời sống:</strong> Thường được sử dụng trong các dịp lễ nghi trang trọng, thiền định hoặc chế tác thành vòng tay thưởng hương cao cấp giúp tĩnh tâm, an thần.</li>
+          </ul>
+          <img src="https://www.dropbox.com/scl/fi/5e9wpqoftl9hsy0x05jhh/image_2026-10-12_130608869.png?rlkey=3ccqfrrhdebn5qltu14628gox&st=k2r9eedw&raw=1" alt="Gỗ Trầm Hương">
+
+          <h3>2. Gỗ Bách Xanh – Tinh hoa đại ngàn Tây Bắc cho bàn làm việc hiện đại</h3>
+          <ul>
+            <li><strong>Đặc tính:</strong> Cây Bách Xanh (Calocedrus macrolepis) sinh trưởng chủ yếu trên những dải núi đá vôi rẻo cao Tây Bắc, tiêu biểu là vùng rừng Văn Chấn – Yên Bái. Thớ gỗ đanh mịn, giàu tinh dầu tự nhiên, màu vàng nâu ánh xanh mộc mạc.</li>
+            <li><strong>Mùi hương:</strong> Hương thơm ngọt dịu, thanh khiết và ấm áp tựa như làn gió sớm thổi qua rừng thông sau cơn mưa. Mùi hương của Bách Xanh rất nhẹ êm, không gây ngợp hay cay mắt.</li>
+            <li><strong>Ứng dụng đời sống:</strong>
+              <ul>
+                <li>Đây là nguyên liệu cốt lõi tạo nên Nụ Bách Xanh Mộng Trầm – dòng sản phẩm đồng hành thư giãn cho góc làm việc cá nhân và phòng máy lạnh.</li>
+                <li>Tinh dầu gỗ tự nhiên giúp xua tan cảm giác mỏi mệt, xoa dịu áp lực tinh thần, đồng thời khử sạch nồm ẩm và mùi bí bách của phòng kín.</li>
+              </ul>
+            </li>
+          </ul>
+          <img src="https://www.dropbox.com/scl/fi/p9m1sbniz7280409glwam/image_2026-10-12_130649927.png?rlkey=zf0ptgzdlgcnydq6m5zl7qn3v&st=gmrpxb84&raw=1" alt="Gỗ Bách Xanh">
+
+          <h3>3. Gỗ Hoàng Đàn – Đệ nhất hương gỗ tuyết</h3>
+          <ul>
+            <li><strong>Đặc tính:</strong> Thuộc dòng gỗ quý hiếm bậc nhất, phân bố hẹp ở vùng núi Lạng Sơn. Điểm độc đáo của Hoàng Đàn là khi để trong môi trường kín gió, tinh dầu tự nhiên sẽ kết tinh thành một lớp tơ trắng mỏng như tuyết phủ trên bề mặt thớ gỗ.</li>
+            <li><strong>Mùi hương:</strong> Vị ngọt đậm, sang trọng, thanh tao và lưu hương bền bỉ theo thời gian.</li>
+            <li><strong>Ứng dụng đời sống:</strong> Thường dùng làm tượng mỹ nghệ cao cấp, tràng hạt thưởng hương hoặc sản phẩm sưu tầm giá trị cao.</li>
+          </ul>
+          <img src="https://www.dropbox.com/scl/fi/1sjfqg4fn3zdsb44xjz5d/image_2026-10-12_130725559.png?rlkey=opip9i3ksgh8tetbws67cm18y&st=jw6q1p3s&raw=1" alt="Gỗ Hoàng Đàn">
+
+          <h3>4. Gỗ Ngọc Am – Hương nồng ấm của rẻo cao Hà Giang</h3>
+          <ul>
+            <li><strong>Đặc tính:</strong> Là loài gỗ lá kim mọc trên đỉnh núi đá cheo leo. Gỗ có lượng tinh dầu rất dồi dào, thớ gỗ màu nâu vàng hoặc nâu đỏ, chất gỗ mịn.</li>
+            <li><strong>Mùi hương:</strong> Mùi thơm nồng đậm, ấm nóng đặc trưng.</li>
+            <li><strong>Ứng dụng đời sống:</strong> Xưa kia thường dùng làm bồn tắm gỗ ngâm người thư giãn, thanh lọc cơ thể; ngày nay hay được tiện bình phú quý hoặc đặt mẩu gỗ thô trong phòng để xua đuổi côn trùng và làm ấm không gian.</li>
+          </ul>
+          <img src="https://www.dropbox.com/scl/fi/poz6c99cp1sa00aa1u24r/image_2026-10-12_130831698.png?rlkey=k07uok1n0uqu0ygu7f1gqkzl3&st=qtfksp1o&raw=1" alt="Gỗ Ngọc Am">
+
+          <h3>5. Gỗ Xá Xị (Gù Hương) – Hương ngọt tươi mát, sảng khoái</h3>
+          <ul>
+            <li><strong>Đặc tính:</strong> Thân cây chứa lượng tinh dầu lỏng có mùi thơm tự nhiên rất giống mùi nước ngọt xá xị quen thuộc. Gỗ có màu đỏ sẫm hoặc vàng xám.</li>
+            <li><strong>Mùi hương:</strong> Tươi mát, ngọt dịu, kích thích khứu giác mang lại cảm giác sảng khoái tức thì.</li>
+            <li><strong>Ứng dụng đời sống:</strong> Chiết xuất tinh dầu xông phòng, chế tác bàn trà gỗ nguyên tấm hoặc tượng nghệ thuật bài trí trong phòng khách.</li>
+          </ul>
+          <img src="https://www.dropbox.com/scl/fi/u4f0skpzrryqv7w9z5myh/xa-xi.jpg?rlkey=eqvo5qc8tzp8yjkqn16yiw2tg&st=04iw50ly&raw=1" alt="Gỗ Xá Xị">
+
+          <h3>6. Gỗ Sưa Đỏ – Giá trị biểu tượng của thời gian</h3>
+          <p>Với mùi hương đặc trưng, màu sắc đẹp và vân gỗ tinh tế, gỗ Sưa không chỉ được yêu thích trong các ngành chế tác đồ gỗ cao cấp, mà còn có giá trị lớn trong phong thủy và y học cổ truyền.</p>
+          <ul>
+            <li><strong>Tên khoa học:</strong> Gỗ Sưa có tên khoa học là Dalbergia tonkinensis, thuộc họ Fabaceae (họ đậu).</li>
+            <li><strong>Nguồn gốc:</strong> Gỗ Sưa chủ yếu phân bố ở khu vực Đông Nam Á, đặc biệt là Việt Nam, Trung Quốc, Lào, và một số khu vực khác trong khu vực nhiệt đới. Gỗ Sưa thường mọc ở các khu rừng nhiệt đới ẩm thấp, trong đó nhiều cây Sưa có tuổi đời rất cao, lên tới hàng trăm năm.</li>
+            <li><strong>Đặc điểm nhận dạng:</strong> Cây Sưa là cây gỗ lớn, có thể cao đến 10-20 mét, vỏ cây màu xám nhạt hoặc nâu xám. Gỗ Sưa có màu đỏ nâu đến đỏ sẫm, vân gỗ sắc nét, mịn màng và đẹp mắt. Một đặc điểm nổi bật của gỗ Sưa là mùi hương đặc trưng, ngọt ngào, dễ chịu khi được cắt hoặc gia công.</li>
+            <li><strong>Tinh dầu trong gỗ:</strong> Gỗ Sưa có chứa tinh dầu tự nhiên, mang lại mùi hương thơm nhẹ nhàng và dễ chịu. Đây là yếu tố quan trọng giúp gỗ Sưa trở thành nguyên liệu quý giá trong chế tác đồ gỗ cao cấp và các sản phẩm phong thủy.</li>
+            <li><strong>Mùi thơm tự nhiên:</strong> Gỗ Sưa tỏa ra mùi thơm tự nhiên rất dễ chịu, không quá nồng, nhưng đủ để tạo cảm giác thư giãn và thoải mái cho người xung quanh, thích hợp cho phòng khách, phòng thờ.</li>
+            <li><strong>Khả năng xua đuổi côn trùng:</strong> Mùi hương từ gỗ Sưa cũng có tác dụng xua đuổi côn trùng, đặc biệt là muỗi và các loại côn trùng nhỏ khác mà không cần đến hóa chất.</li>
+          </ul>
+          <img src="https://www.dropbox.com/scl/fi/f37nnni12agumjqt7zzoa/sua-do.jpg?rlkey=ug0z4wjaodum5g1jz9m4m738a&st=yz1d3bw7&raw=1" alt="Gỗ Sưa Đỏ">
+
+          <h3>Giá Trị Của Hương Gỗ Tự Nhiên Đối Với Sức Khỏe & Không Gian Sống</h3>
+          <p>Khác với các sản phẩm tạo hương hóa học dễ gây ngạt và đau đầu khi dùng lâu, gỗ thơm tự nhiên mang lại nhiều lợi ích thiết thực:</p>
+          <ul>
+            <li><strong>1. Xoa dịu hệ thần kinh:</strong> Mùi hương mộc từ tinh dầu gỗ giúp nhịp thở chậm lại, giảm tiết hormone căng thẳng và hỗ trợ giấc ngủ ngon hơn.</li>
+            <li><strong>2. Thanh lọc không khí tự nhiên:</strong> Tinh dầu trong các loại gỗ như Bách Xanh có đặc tính kháng khuẩn nhẹ, giúp khử nấm mốc, làm khô ráo phòng điều hòa khép kín.</li>
+            <li><strong>3. Nâng tầm trải nghiệm cá nhân:</strong> Đốt một nụ gỗ mộc bên bàn làm việc tạo nên một góc thư thái (desk chill), nuôi dưỡng sự tập trung và cân bằng nội tâm.</li>
+          </ul>
+
+          <h3>Khoảng lặng bình yên cho góc bàn quen thuộc</h3>
+          <p>Giữa muôn vàn sắc hương gỗ quý, Mộng Trầm chọn mang Bách Xanh Yên Bái về với phố thị bởi sự gần gũi, dịu êm và phù hợp nhất với nhịp sống của người trẻ. Không cầu kỳ hay xa xỉ, chỉ cần một nụ mộc bén lửa bên bàn làm việc là đủ để bạn tìm lại chút thư thái sau những giờ làm việc mệt mỏi.</p>
+          <p>Nếu bạn cũng đang tìm kiếm một nốt hương mộc sạch cho góc phòng của mình, hãy cùng Mộng Trầm bắt đầu từ những làn khói nhẹ lành đầu tiên.</p>
+
+          <div class="article-cta">
+            <a href="https://www.messenger.com/t/1220710947803551/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0" target="_blank" rel="noopener noreferrer">
+              <span class="material-icons-outlined">chat</span>
+              Trải nghiệm Nụ Bách Xanh Yên Bái cùng Mộng Trầm (Nhắn tin ngay)
+            </a>
+          </div>
+        `
+      },
+      {
+        id: "cach-dot",
+        title: "Cách Đốt & Sử Dụng Nụ Trầm Hiệu Quả Nhất",
+        image: "https://www.dropbox.com/scl/fi/o6ke3bigrrh6ssck8aehz/image_2026-10-12_141104554.png?rlkey=rloartookhg8jk7rhs86ag0xo&st=3wwj2otr&raw=1",
+        shortDesc: "Hướng dẫn các bước đốt nụ trầm đúng cách, lựa chọn lư xông phù hợp để làn khói lan tỏa linh thiêng, mang lại không gian tịnh tâm tuyệt đối...",
+        fullContent: `
+          <p>Chỉ với vài bước đơn giản, bạn đã có thể tạo cho mình một khoảng không gian thư thái cùng hương gỗ. Nếu mới sử dụng nụ trầm, hãy bắt đầu từ cách đốt, lựa chọn vị trí đặt nụ và những lưu ý an toàn dưới đây.</p>
+          
+          <h3>1. Chuẩn bị trước khi đốt nụ trầm</h3>
+          <p>Trước khi sử dụng, bạn cần chuẩn bị nụ trầm và một chiếc đế hoặc lư hương chịu nhiệt, có bề mặt vững chắc. Đặt đế trên mặt phẳng ổn định, tránh xa giấy, rèm cửa, chăn màn và những vật liệu dễ bắt lửa.</p>
+          <p>Nếu lần đầu sử dụng, bạn nên chọn không gian rộng, thông thoáng và đốt một nụ để làm quen với mùi hương. Không cần sử dụng quá nhiều nụ cùng lúc, đặc biệt trong phòng nhỏ hoặc kín.</p>
+
+          <h3>2. Hướng dẫn đốt nụ trầm đúng cách</h3>
+
+          <p><strong>Bước 1: Đặt nụ trầm lên đế</strong></p>
+          <p>Đặt nụ thẳng đứng trên đế chuyên dụng, bảo đảm nụ đứng vững và tro có thể rơi xuống đế trong quá trình cháy.</p>
+          <img src="https://www.dropbox.com/scl/fi/t73gr43gty6x0bppj0zl8/image_2026-10-12_132653239.png?rlkey=af5i8a7eoksvjwmbl8qe0kvvm&st=bi6q685n&raw=1" alt="Đặt nụ trầm lên đế">
+
+          <p><strong>Bước 2: Châm lửa ở phần đỉnh nụ</strong></p>
+          <p>Dùng bật lửa hoặc que diêm châm vào đầu nụ trong vài giây, đến khi phần đỉnh bắt lửa. Sau đó, nhẹ nhàng thổi tắt ngọn lửa để nụ âm ỉ cháy và tỏa khói.</p>
+          <img src="https://www.dropbox.com/scl/fi/mm9eon5tc64br4xv3lj8a/image_2026-10-12_132746480.png?rlkey=7emhb7culieo7epa264xcmd8j&st=eqb032lc&raw=1" alt="Châm lửa phần đỉnh nụ">
+
+          <p><strong>Bước 3: Đặt nụ ở vị trí phù hợp</strong></p>
+          <p>Đặt đế ở nơi thông thoáng, tránh gió mạnh khiến nụ cháy không đều. Sau đó, bạn có thể đọc sách, thưởng trà hoặc nghỉ ngơi trong lúc hương thơm lan tỏa.</p>
+          <img src="https://www.dropbox.com/scl/fi/5wb5vi0jpzsxd7ed9qzgv/image_2026-10-12_132821199.png?rlkey=9r55ttcu3tmaaukdbtsevr3pl&st=1vizy3s8&raw=1" alt="Đặt nụ ở vị trí phù hợp">
+
+          <p><em>Lưu ý: Nếu nụ tắt giữa chừng, hãy kiểm tra hướng dẫn của nhà sản xuất trước khi châm lại. Không chạm tay vào nụ hoặc đế khi còn nóng.</em></p>
+
+          <h3>3. Nên đốt nụ trầm vào thời điểm nào?</h3>
+          <p>Không có một thời điểm cố định phù hợp với tất cả mọi người. Bạn có thể lựa chọn theo thói quen sinh hoạt của mình:</p>
+          <ul>
+            <li><strong>Buổi sáng:</strong> Tạo không khí dễ chịu khi bắt đầu ngày mới.</li>
+            <li><strong>Sau giờ học hoặc làm việc:</strong> Dành một khoảng thời gian nghỉ ngơi, đọc sách hoặc nghe nhạc.</li>
+            <li><strong>Cuối tuần:</strong> Kết hợp cùng việc thưởng trà, dọn dẹp hoặc sắp xếp lại không gian sống.</li>
+          </ul>
+          <p>Điều quan trọng là sử dụng lượng hương vừa phải, phù hợp với diện tích phòng và cảm nhận của bản thân.</p>
+
+          <h3>4. Những lưu ý quan trọng khi sử dụng nụ trầm</h3>
+          <p>Đốt nụ trầm vẫn tạo ra khói và các sản phẩm của quá trình cháy. Vì vậy, bạn không nên đốt trong phòng kín hoặc để khói tích tụ trong thời gian dài.</p>
+          <ul>
+            <li>Giữ không gian thông thoáng trong và sau khi sử dụng.</li>
+            <li>Không đặt nụ trầm gần trẻ nhỏ, thú cưng hoặc vật dễ cháy.</li>
+            <li>Không để nụ đang cháy mà không có người trông coi; cần bảo đảm nụ đã tắt hoàn toàn sau khi sử dụng.</li>
+            <li>Nếu cảm thấy cay mắt, khó chịu đường hô hấp hoặc nhức đầu, hãy dừng sử dụng và ra nơi thoáng khí.</li>
+            <li>Người nhạy cảm với khói nên cân nhắc hạn chế hoặc tránh sử dụng.</li>
+          </ul>
+
+          <h3>Tận hưởng khoảng lặng theo cách của riêng bạn</h3>
+          <p>Với Mộng Trầm, việc sử dụng nụ Bách Xanh không nhất thiết phải gắn với một nghi thức cầu kỳ. Đôi khi, đó chỉ là một khoảng thời gian ngắn để tạm rời màn hình, đọc vài trang sách hoặc ngồi yên sau một ngày bận rộn.</p>
+          <p>Hãy bắt đầu từ cách sử dụng đơn giản, an toàn và phù hợp với không gian của mình để tìm ra trải nghiệm hương thơm mà bạn yêu thích.</p>
+          <p><strong>Mộng Trầm – Thoảng làn hương, lòng thêm thương.</strong></p>
+
+          <div class="article-cta">
+            <a href="https://www.messenger.com/t/1220710947803551/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0" target="_blank" rel="noopener noreferrer">
+              <span class="material-icons-outlined">chat</span>
+              Khám phá thêm các sản phẩm nụ Bách Xanh Mộng Trầm (Nhắn tin ngay)
+            </a>
+          </div>
+        `
+      },
+      {
+        id: "bao-quan",
+        title: "Bí Quyết Bảo Quản Trầm Hương Luôn Thơm Lâu",
+        image: "https://www.dropbox.com/scl/fi/qhzdogp145hg6gi9ygv2f/image_2026-10-12_134311018.png?rlkey=kxbw0rbq9y76hjjkp49abdmog&st=79544h7h&raw=1",
+        shortDesc: "Chia sẻ phương pháp bảo quản nụ trầm trong môi trường khô ráo, đậy kín nắp hộp nhằm lưu giữ trọn vẹn tinh dầu quý giá theo năm tháng...",
+        fullContent: `
+          <p>Nụ trầm được làm từ nguyên liệu có nguồn gốc thực vật nên có thể bị ảnh hưởng bởi độ ẩm, nhiệt độ và môi trường bảo quản. Chỉ cần chú ý một vài thói quen nhỏ, bạn có thể hạn chế tình trạng nụ bị ẩm, biến dạng hoặc thay đổi mùi hương trong quá trình sử dụng.</p>
+
+          <h3>1. Giữ nụ trầm ở nơi khô ráo</h3>
+          <p>Độ ẩm là một trong những yếu tố cần lưu ý khi bảo quản nụ trầm. Nếu để sản phẩm trong môi trường ẩm kéo dài, nụ có thể hút ẩm, khó bắt lửa hoặc xuất hiện dấu hiệu nấm mốc.</p>
+          <p>Bạn nên đặt hộp nụ trầm ở nơi khô ráo, sạch sẽ, tránh khu vực gần bồn rửa, phòng tắm hoặc nơi thường xuyên bị hơi nước tác động.</p>
+          <p>Nếu thời tiết nồm ẩm, hãy kiểm tra hộp thường xuyên và hạn chế mở nắp khi môi trường xung quanh quá ẩm.</p>
+
+          <h3>2. Đóng kín hộp sau mỗi lần sử dụng</h3>
+          <p>Sau khi lấy đủ số nụ cần dùng, hãy đóng kín hộp để hạn chế bụi bẩn và sự trao đổi hơi ẩm với môi trường bên ngoài.</p>
+          <p>Nếu bao bì ban đầu có khả năng bảo vệ tốt, bạn có thể tiếp tục sử dụng bao bì đó. Trường hợp cần chuyển sang hộp khác, hãy chọn hộp sạch, khô và có nắp đậy phù hợp.</p>
+          <p>Không nên để nụ trầm tiếp xúc trực tiếp với các loại nước hoa, chất tẩy rửa hoặc những sản phẩm có mùi mạnh, vì mùi từ môi trường xung quanh có thể ảnh hưởng đến hương thơm của nụ.</p>
+
+          <h3>3. Tránh ánh nắng trực tiếp và nguồn nhiệt</h3>
+          <p>Nhiệt độ cao và ánh nắng chiếu trực tiếp trong thời gian dài có thể làm thay đổi đặc tính của nguyên liệu có mùi thơm. Vì vậy, bạn không nên đặt hộp nụ trầm trên bệ cửa sổ có nắng gắt, gần bếp hoặc cạnh thiết bị tỏa nhiệt.</p>
+          <p>Một ngăn tủ khô ráo, thoáng và tránh ánh nắng trực tiếp thường là lựa chọn phù hợp để cất giữ sản phẩm.</p>
+
+          <h3>4. Kiểm tra nụ trầm trước khi sử dụng</h3>
+          <p>Trước khi đốt, hãy dành một chút thời gian kiểm tra tình trạng của nụ. Nếu thấy sản phẩm có dấu hiệu bất thường, bạn nên thận trọng thay vì tiếp tục sử dụng.</p>
+          <p>Một số dấu hiệu cần chú ý:</p>
+          <ul>
+            <li>Nụ bị mềm, ẩm hoặc biến dạng so với ban đầu.</li>
+            <li>Xuất hiện đốm mốc, lớp phủ bất thường hoặc dấu hiệu côn trùng.</li>
+            <li>Mùi hương thay đổi rõ rệt, xuất hiện mùi ẩm mốc hoặc mùi lạ.</li>
+          </ul>
+          <p>Nếu nghi ngờ nụ đã bị nấm mốc hoặc nhiễm bẩn, không nên đốt để thử. Hãy ngừng sử dụng và liên hệ nơi bán để được hướng dẫn.</p>
+
+          <h3>5. Nụ trầm có thể bảo quản trong bao lâu?</h3>
+          <p>Thời gian bảo quản phụ thuộc vào nguyên liệu, thành phần, độ ẩm ban đầu, quy trình sản xuất và điều kiện cất giữ. Vì vậy, không nên mặc định mọi loại nụ trầm đều giữ nguyên chất lượng trong cùng một khoảng thời gian.</p>
+          <p>Để biết thời hạn sử dụng phù hợp, bạn nên ưu tiên thông tin do nhà sản xuất cung cấp. Nếu bao bì có ghi hạn sử dụng hoặc hướng dẫn bảo quản riêng, hãy làm theo hướng dẫn đó.</p>
+          <p>Trong quá trình sử dụng, bạn cũng nên lấy nụ theo lượng cần thiết, tránh mở hộp quá lâu hoặc để sản phẩm tiếp xúc với môi trường ẩm.</p>
+
+          <h3>6. Bảo quản tốt bắt đầu từ những thói quen nhỏ</h3>
+          <p>Một hộp nụ trầm được cất giữ đúng cách không chỉ giúp việc sử dụng thuận tiện hơn mà còn hạn chế các tác động từ môi trường lên sản phẩm.</p>
+          <p>Với nụ Bách Xanh Yên Bái của Mộng Trầm, bạn nên bảo quản theo hướng dẫn trên bao bì và duy trì ba thói quen cơ bản: giữ khô ráo, đóng kín hộp và tránh nhiệt độ cao.</p>
+          <p>Khi hiểu rõ cách chăm sóc sản phẩm, bạn sẽ chủ động hơn trong quá trình sử dụng và có thể tận hưởng hương gỗ theo cách phù hợp với không gian sống của mình.</p>
+          <p><strong>Mộng Trầm – Thoảng làn hương, lòng thêm thương.</strong></p>
+
+          <div class="article-cta">
+            <a href="https://www.messenger.com/t/1220710947803551/?messaging_source=source%3Apages%3Amessage_shortlink&source_id=1441792&recurring_notification=0" target="_blank" rel="noopener noreferrer">
+              <span class="material-icons-outlined">chat</span>
+              Khám phá thêm các sản phẩm nụ Bách Xanh Mộng Trầm (Nhắn tin ngay)
+            </a>
+          </div>
+        `
+      }
+    ];
+
+    let currentGuideIndex = 0;
+
+    function renderGuideSlider() {
+      const track = document.getElementById('guide-track');
+      const dotsContainer = document.getElementById('slider-dots');
+      if (!track || !dotsContainer) return;
+
+      track.innerHTML = '';
+      dotsContainer.innerHTML = '';
+
+      LIST_CANG_NANG.forEach((article, idx) => {
+        const slideItem = document.createElement('div');
+        slideItem.className = 'guide-slide-item';
+        slideItem.innerHTML = `
+          <div class="info-card">
+            <div class="info-img-wrapper">
+              <img src="${article.image}" alt="${article.title}" class="info-card-img" onerror="this.src='https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80'" loading="lazy">
+            </div>
+            <div class="info-card-body">
+              <h3 class="info-card-title">${article.title}</h3>
+              <p class="info-card-desc">${article.shortDesc}</p>
+              <button class="btn-read-more" onclick="openArticleModal('${article.id}')">
+                <span class="material-icons-outlined">menu_book</span>
+                Đọc Bài Viết
+              </button>
+            </div>
+          </div>
+        `;
+        track.appendChild(slideItem);
+
+        const dot = document.createElement('div');
+        dot.className = `slider-dot ${idx === currentGuideIndex ? 'active' : ''}`;
+        dot.onclick = () => goToGuideSlide(idx);
+        dotsContainer.appendChild(dot);
+      });
+
+      updateGuideSliderPosition();
+    }
+
+    function updateGuideSliderPosition() {
+      const track = document.getElementById('guide-track');
+      if (!track) return;
+      track.style.transform = `translateX(-${currentGuideIndex * 100}%)`;
+
+      const dots = document.querySelectorAll('.slider-dot');
+      dots.forEach((dot, idx) => {
+        if (idx === currentGuideIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+
+    function nextGuideSlide() {
+      currentGuideIndex = (currentGuideIndex + 1) % LIST_CANG_NANG.length;
+      updateGuideSliderPosition();
+    }
+
+    function prevGuideSlide() {
+      currentGuideIndex = (currentGuideIndex - 1 + LIST_CANG_NANG.length) % LIST_CANG_NANG.length;
+      updateGuideSliderPosition();
+    }
+
+    function goToGuideSlide(index) {
+      currentGuideIndex = index;
+      updateGuideSliderPosition();
+    }
+
+    function openArticleModal(articleId) {
+      const article = LIST_CANG_NANG.find(a => a.id === articleId);
+      if (!article) return;
+
+      document.getElementById('article-modal-title').textContent = article.title;
+      document.getElementById('article-modal-body').innerHTML = article.fullContent;
+      
+      const modal = document.getElementById('article-modal');
+      modal.classList.add('active');
+    }
+
+    function closeArticleModal() {
+      const modal = document.getElementById('article-modal');
+      modal.classList.remove('active');
+    }
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeSlideshow();
+      if (e.key === 'Escape') {
+        closeSlideshow();
+        closeArticleModal();
+      }
     });
 
-    // KHỞI TẠO BAN ĐẦU
+    /* ===================================================
+       4. GỬI ĐÁNH GIÁ VỀ GOOGLE SHEETS (APPS SCRIPT)
+       =================================================== */
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJBCCzaY8Pusfh_OrxzFj3ZImtJNCxFk2ZEE89YyBUujP_Fpf_ZdNUcspxGaFo5b-Pyw/exec";
+
+    document.querySelector('.review-form-box form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = this.querySelector('input[type="text"]').value;
+      const rating = this.querySelector('select').value;
+      const comment = this.querySelector('textarea').value;
+      
+      const formData = { name, rating, comment };
+      
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        alert('Cảm ơn bạn đã gửi đánh giá! Chúc bạn luôn vui vẻ và hạnh phúc bên gia đình!');
+        this.reset();
+      })
+      .catch(error => {
+        console.error('Lỗi:', error);
+        alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+      });
+    });
+
+    /* ===================================================
+       5. HIỆU ỨNG KHÓI MỜ & CÁNH HOA RỤNG (CANVAS)
+       =================================================== */
+    function initZenEffects() {
+      const canvas = document.getElementById('zen-canvas');
+      const ctx = canvas.getContext('2d');
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const petals = [];
+      for (let i = 0; i < 20; i++) {
+        petals.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: Math.random() * 6 + 4,
+          speedY: Math.random() * 0.8 + 0.3,
+          speedX: Math.random() * 0.5 - 0.25,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.02,
+          opacity: Math.random() * 0.5 + 0.3
+        });
+      }
+
+      const smokeParticles = [];
+      for (let i = 0; i < 12; i++) {
+        smokeParticles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 150 + 100,
+          opacity: Math.random() * 0.04 + 0.01,
+          speedX: Math.random() * 0.3 - 0.15,
+          speedY: Math.random() * -0.2 - 0.05
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        smokeParticles.forEach(p => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+          if (p.x < -p.radius) p.x = width + p.radius;
+          if (p.x > width + p.radius) p.x = -p.radius;
+          if (p.y < -p.radius) p.y = height + p.radius;
+
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+          grad.addColorStop(0, `rgba(212, 175, 55, ${p.opacity})`);
+          grad.addColorStop(0.5, `rgba(255, 255, 255, ${p.opacity * 0.5})`);
+          grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        petals.forEach(p => {
+          p.y += p.speedY;
+          p.x += Math.sin(p.angle) * 0.5 + p.speedX;
+          p.angle += p.spin;
+
+          if (p.y > height + 20) {
+            p.y = -20;
+            p.x = Math.random() * width;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = `rgba(243, 229, 171, ${p.opacity})`;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.bezierCurveTo(-p.size, -p.size, -p.size, p.size, 0, p.size * 1.5);
+          ctx.bezierCurveTo(p.size, p.size, p.size, -p.size, 0, 0);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initAudio();
       initZenEffects();
       renderLandmarkCards();
+      renderGuideSlider();
     });
   </script>
 </body>
